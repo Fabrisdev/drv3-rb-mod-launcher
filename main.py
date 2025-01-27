@@ -1,9 +1,12 @@
-from urllib.request import urlretrieve
+from lib import *
 
-download_links = {
-    "reloaded": "https://github.com/Reloaded-Project/Reloaded-II/releases/download/1.28.6/Setup.exe",
-    "cri_filesystem_hook": "https://gamebanana.com/dl/875046",
-    "resolute_rebellion": "https://gamebanana.com/dl/1319908"
-}
-
-urlretrieve(download_links["reloaded"], "reloaded.exe")
+print("Downloading mod...")
+print('Finished downloading mod. Copying Reloaded Installation and installing the mod...')
+extract_reloaded_installation()
+copy_reloaded_installation_to_documents()
+try_delete_old_reloaded_configs()
+try_delete_old_mod_versions()
+extract_and_store_mod()
+print('Finished installing the mod. Creating shortcut...')
+create_shortcut()
+print('All done!')
