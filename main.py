@@ -1,6 +1,7 @@
 from lib import *
 
 print("Downloading mod...")
+download_mod()
 print('Finished downloading mod. Copying Reloaded Installation and installing the mod...')
 extract_reloaded_installation()
 copy_reloaded_installation_to_documents()
