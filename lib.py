@@ -4,6 +4,7 @@ import os
 import shutil
 import tempfile
 from win32com.client import Dispatch
+import sys
 
 mod_foldername = "drv3.rewrite.resoluterebellion"
 mod_download_link = "https://gamebanana.com/dl/1319908"
@@ -16,13 +17,17 @@ program_files_x86_folder_path = os.environ["ProgramFiles(x86)"]
 def download_mod():
     urlretrieve(mod_download_link, os.path.join(temp_folder_path, "resolute_rebellion.7z"), show_progress)
 
-def extract_reloaded_installation():
-    archive = py7zr.SevenZipFile("Reloaded-II.7z", mode='r')
-    archive.extractall()
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
 
-def copy_reloaded_installation_to_documents():
-    try: shutil.copytree("Reloaded-II", os.path.join(documents_folder_path, reloaded_installation_foldername))
-    except: print('Already existing Reloaded installation found. Using that one instead...')
+    return os.path.join(base_path, relative_path)
+
+def extract_and_store_reloaded_installation():
+    archive = py7zr.SevenZipFile(resource_path("Reloaded-II.7z"), mode='r')
+    archive.extractall(path=os.path.join(documents_folder_path, reloaded_installation_foldername))
 
 def try_delete_old_reloaded_configs():
     try: shutil.rmtree(os.path.join(os.getenv('APPDATA'), "Reloaded-Mod-Loader-II"))
