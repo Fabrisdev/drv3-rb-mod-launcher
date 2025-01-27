@@ -3,8 +3,6 @@ import py7zr
 import os
 import shutil
 import tempfile
-import winshell
-import pythoncom
 from win32com.client import Dispatch
 
 mod_foldername = "drv3.rewrite.resoluterebellion"
@@ -20,7 +18,7 @@ def download_mod():
 
 def extract_reloaded_installation():
     archive = py7zr.SevenZipFile("Reloaded-II.7z", mode='r')
-    archive.extractall(path=f"Reloaded-II")
+    archive.extractall()
 
 def copy_reloaded_installation_to_documents():
     try: shutil.copytree("Reloaded-II", os.path.join(documents_folder_path, reloaded_installation_foldername))
