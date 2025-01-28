@@ -37,7 +37,7 @@ webview.create_window(
 webview.start()
 
 
-exit(0)
+sys.exit(0)
 print("Downloading mod...")
 download_mod()
 print('Finished downloading mod. Copying Reloaded Installation and installing the mod...')
