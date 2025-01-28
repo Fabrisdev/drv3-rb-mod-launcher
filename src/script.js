@@ -11,7 +11,7 @@ installHitbox.addEventListener('mouseover', () => {
     optionsSelectedImage.style.visibility = 'hidden'
     installSelectedImage.style.visibility = 'visible'
     if(selected === "install") return
-    playSelectSoundEffect()
+    playHoverSoundEffect()
     selected = "install"
 })
 
@@ -20,7 +20,7 @@ optionsHitbox.addEventListener('mouseover', () => {
     installSelectedImage.style.visibility = 'hidden'
     optionsSelectedImage.style.visibility = 'visible'
     if(selected === "options") return
-    playSelectSoundEffect()
+    playHoverSoundEffect()
     selected = "options"
 })
 
@@ -29,12 +29,12 @@ exitHitbox.addEventListener('mouseover', () => {
     optionsSelectedImage.style.visibility = 'hidden'
     exitSelectedImage.style.visibility = 'visible'
     if(selected === "exit") return
-    playSelectSoundEffect()
+    playHoverSoundEffect()
     selected = "exit"
 })
 
-function playSelectSoundEffect(){
-    const audio = new Audio("sound_effects/select.mp3")
+function playHoverSoundEffect(){
+    const audio = new Audio("sound_effects/hover.mp3")
     audio.play()
 }
 
