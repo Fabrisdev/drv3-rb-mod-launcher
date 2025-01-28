@@ -34,7 +34,7 @@ exitHitbox.addEventListener('mouseover', () => {
 })
 
 function playSelectSoundEffect(){
-    const audio = new Audio("select_sound_effect.mp3")
+    const audio = new Audio("sound_effects/select.mp3")
     audio.play()
 }
 
