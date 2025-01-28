@@ -1,0 +1,59 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+video{
+    position: fixed;
+    z-index: -1;
+}
+
+#install_selected_image{
+    position: fixed;
+    bottom: 2;
+    right: 3;
+}
+
+#options_selected_image{
+    position: fixed;
+    bottom: 1;
+    right: 0;
+    visibility: hidden;
+}
+
+#exit_selected_image{
+    position: fixed;
+    bottom: 1;
+    right: 0;
+    visibility: hidden;
+}
+
+#install_hitbox{
+    background-color: #0000;
+    width: 350px; 
+    height: 70px;
+    position: fixed;
+    bottom: 240;
+    right: 70;
+    rotate: -8deg;
+}
+
+#options_hitbox{
+    background-color: #0000;
+    width: 330px; 
+    height: 75px;
+    position: fixed;
+    bottom: 140;
+    right: 160;
+    rotate: -4deg;
+}
+
+#exit_hitbox{
+    background-color: #0000;
+    width: 310px; 
+    height: 75px;
+    position: fixed;
+    bottom: 40;
+    right: 180;
+    rotate: 3deg;
+}
