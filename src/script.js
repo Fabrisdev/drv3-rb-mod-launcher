@@ -38,6 +38,11 @@ function playHoverSoundEffect(){
     audio.play()
 }
 
+function playSelectSoundEffect(){
+    const audio = new Audio("sound_effects/select.mp3")
+    audio.play()
+}
+
 installHitbox.addEventListener('click', () => {
     pywebview.api.install()
 })
