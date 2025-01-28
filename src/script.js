@@ -38,6 +38,10 @@ function playSelectSoundEffect(){
     audio.play()
 }
 
+installHitbox.addEventListener('click', () => {
+    pywebview.api.install()
+})
+
 exitHitbox.addEventListener('click', () => {
     pywebview.api.exit()
 })
