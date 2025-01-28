@@ -2,6 +2,7 @@ from lib import *
 import webview
 import os
 from ctypes import windll
+import sys
 
 def resource_path(relative_path):
     try:
