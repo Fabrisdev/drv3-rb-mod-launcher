@@ -15,7 +15,7 @@
   },
   {
    "optionDest": "console",
-   "value": true
+   "value": false
   },
   {
    "optionDest": "icon_file",
@@ -60,6 +60,10 @@
   {
    "optionDest": "datas",
    "value": "C:/Users/Fabri/Documents/drv3-rb-mod-launcher/Reloaded-II.7z;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/Fabri/Documents/drv3-rb-mod-launcher/src;src/"
   }
  ],
  "nonPyinstallerOptions": {
