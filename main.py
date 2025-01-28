@@ -1,7 +1,7 @@
 from lib import *
 
 print("Downloading mod...")
-#download_mod()
+download_mod()
 print('Finished downloading mod. Copying Reloaded Installation and installing the mod...')
 extract_and_store_reloaded_installation()
 try_delete_old_reloaded_configs()
