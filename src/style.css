@@ -57,3 +57,43 @@ video{
     right: 180;
     rotate: 3deg;
 }
+
+.alert{
+    position: fixed;
+    visibility: hidden;
+}
+
+@keyframes show_alert {
+    from {
+        opacity: 0.5;
+        bottom: 50px;
+    }
+    to {
+        opacity: 1;
+        bottom: 1;
+    }
+}
+
+.show_alert {
+    animation-name: show_alert;
+    animation-duration: 0.25s;
+    animation-fill-mode: forwards;
+}
+
+#no_hitbox{
+    background-color: #0000;
+    width: 340px; 
+    height: 75px;
+    position: fixed;
+    bottom: 140;
+    right: 280;
+}
+
+#yes_hitbox{
+    background-color: #0000;
+    width: 340px; 
+    height: 75px;
+    position: fixed;
+    bottom: 140;
+    right: 680;
+}
