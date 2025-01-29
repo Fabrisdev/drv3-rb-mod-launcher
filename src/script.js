@@ -55,21 +55,25 @@ exitHitbox.addEventListener('click', () => {
 function showAlreadyExistingInstallationAlert(){
     const warningNo = document.getElementById('warning_existing_installation_found_no')
     const warningYes = document.getElementById('warning_existing_installation_found_yes')
+    showAlert(warningNo, warningYes)
+}
+
+function showAlert(noImage, yesImage){
     const noHitbox = document.getElementById('no_hitbox')
     const yesHitbox = document.getElementById('yes_hitbox')
     installHitbox.style.visibility = 'hidden'
     optionsHitbox.style.visibility = 'hidden'
     exitHitbox.style.visibility = 'hidden'
-    warningNo.style.visibility = 'visible'
-    warningNo.classList.add('show_alert')
+    noImage.style.visibility = 'visible'
+    noImage.classList.add('show_alert')
     const noHitboxMouseover = function(){
-        warningYes.style.visibility = 'hidden'
-        warningNo.style.visibility = 'visible'
+        yesImage.style.visibility = 'hidden'
+        noImage.style.visibility = 'visible'
         playHoverSoundEffect()
     }
     const yesHitboxMouseover = function(){
-        warningNo.style.visibility = 'hidden'
-        warningYes.style.visibility = 'visible'
+        noImage.style.visibility = 'hidden'
+        yesImage.style.visibility = 'visible'
         playHoverSoundEffect()
     }
     noHitbox.addEventListener('mouseover', noHitboxMouseover)
@@ -79,8 +83,8 @@ function showAlreadyExistingInstallationAlert(){
         .catch(() => pywebview.api.answered_no())
         .finally(() => {
             playSelectSoundEffect()
-            warningNo.style.visibility = 'hidden'
-            warningYes.style.visibility = 'hidden'
+            noImage.style.visibility = 'hidden'
+            yesImage.style.visibility = 'hidden'
             noHitbox.removeEventListener('mouseover', noHitboxMouseover)
             yesHitbox.removeEventListener('mouseover', yesHitboxMouseover)
             installHitbox.style.visibility = 'visible'
