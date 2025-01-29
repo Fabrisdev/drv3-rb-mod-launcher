@@ -7,7 +7,7 @@
   },
   {
    "optionDest": "filenames",
-   "value": "C:/Users/Fabri/Documents/drv3-rb-mod-launcher/main.py"
+   "value": "main.py"
   },
   {
    "optionDest": "onefile",
@@ -19,7 +19,7 @@
   },
   {
    "optionDest": "icon_file",
-   "value": "C:/Users/Fabri/Downloads/maki.ico"
+   "value": "maki.ico"
   },
   {
    "optionDest": "name",
@@ -59,11 +59,11 @@
   },
   {
    "optionDest": "datas",
-   "value": "C:/Users/Fabri/Documents/drv3-rb-mod-launcher/Reloaded-II.7z;."
+   "value": "Reloaded-II.7z;."
   },
   {
    "optionDest": "datas",
-   "value": "C:/Users/Fabri/Documents/drv3-rb-mod-launcher/src;src/"
+   "value": "src;src/"
   }
  ],
  "nonPyinstallerOptions": {
