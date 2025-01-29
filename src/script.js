@@ -67,6 +67,7 @@ function showAlert(noImage, yesImage){
     noImage.style.visibility = 'visible'
     noImage.classList.add('show_alert')
     const noHitboxMouseover = function(){
+        if(noImage.style.visibility === 'visible') return
         yesImage.style.visibility = 'hidden'
         noImage.style.visibility = 'visible'
         playHoverSoundEffect()
