@@ -80,7 +80,10 @@ function showAlert(noImage, yesImage){
     yesHitbox.addEventListener('mouseover', yesHitboxMouseover)
     getAnswer()
         .then(() => pywebview.api.answered_yes())
-        .catch(() => pywebview.api.answered_no())
+        .catch(() => {
+            pywebview.api.answered_no()
+            selected = "options"
+        })
         .finally(() => {
             playSelectSoundEffect()
             noImage.style.visibility = 'hidden'
