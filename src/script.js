@@ -90,6 +90,7 @@ function showAlert(noImage, yesImage){
             installHitbox.style.visibility = 'visible'
             optionsHitbox.style.visibility = 'visible'
             exitHitbox.style.visibility = 'visible'
+            noImage.classList.remove('show_alert')
         })
 }
 
