@@ -73,6 +73,7 @@ function showAlert(noImage, yesImage){
         playHoverSoundEffect()
     }
     const yesHitboxMouseover = function(){
+        if(yesImage.style.visibility === 'visible') return
         noImage.style.visibility = 'hidden'
         yesImage.style.visibility = 'visible'
         playHoverSoundEffect()
