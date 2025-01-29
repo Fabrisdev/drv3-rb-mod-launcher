@@ -40,12 +40,13 @@ video{
 
 #options_hitbox{
     background-color: #0000;
-    width: 330px; 
+    width: 330px;
     height: 75px;
     position: fixed;
     bottom: 140;
     right: 160;
     rotate: -4deg;
+    z-index: 100;
 }
 
 #exit_hitbox{
