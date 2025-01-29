@@ -10,8 +10,8 @@ video{
 
 #install_selected_image{
     position: fixed;
-    bottom: 2;
-    right: 3;
+    bottom: 1;
+    right: 2;
 }
 
 #options_selected_image{
