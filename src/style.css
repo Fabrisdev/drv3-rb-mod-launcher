@@ -98,3 +98,26 @@ video{
     bottom: 140;
     right: 680;
 }
+
+#ok_hitbox{
+    background-color: #0000;
+    width: 340px; 
+    height: 75px;
+    position: fixed;
+    bottom: 130;
+    right: 470;
+    visibility: hidden;
+}
+
+#installation_started_text{
+    font-family: sans-serif;
+    font-size: 33px;
+    color: #fff;
+    position: fixed;
+    z-index: 1000;
+    top: 325;
+    left: 125px;
+    letter-spacing: 2px;
+    text-align: center;
+    width: 80%;
+}

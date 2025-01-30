@@ -4,6 +4,7 @@ const exitSelectedImage = document.getElementById('exit_selected_image')
 const installHitbox = document.getElementById('install_hitbox')
 const optionsHitbox = document.getElementById('options_hitbox')
 const exitHitbox = document.getElementById('exit_hitbox')
+const installationStartedText = document.getElementById('installation_started_text')
 let selected = "install"
 
 installHitbox.addEventListener('mouseover', () => {
@@ -43,19 +44,77 @@ function playSelectSoundEffect(){
     audio.play()
 }
 
-installHitbox.addEventListener('click', () => {
+installHitbox.addEventListener('click', async () => {
     playSelectSoundEffect()
-    pywebview.api.install()
+    const hasDanganronpaInstalled = await pywebview.api.check_has_danganronpa_installed()
+    let danganronpaFilePath = "STEAM_PATH"
+    if(!hasDanganronpaInstalled) {
+        const answerToNoDanganronpaInstalled = await showNoDanganronpaInstalledAlert()
+        if(answerToNoDanganronpaInstalled === "yes") {
+            danganronpaFilePath = await pywebview.api.ask_for_danganronpa_file_path()
+            if(danganronpaFilePath === "") return
+        }
+        if(answerToNoDanganronpaInstalled === "no") return
+    }
+    const hasOldModInstallation = await pywebview.api.check_has_old_mod_version_installed()
+    if(hasOldModInstallation){
+        const answerToOldModInstallation = await showAlreadyExistingInstallationAlert()
+        if(answerToOldModInstallation === "no") return
+    }
+    showInstallationStartedAlert()
+    pywebview.api.install(danganronpaFilePath)
 })
+
+function showInstallationStatus(status){
+    if(status === "INSTALL FINISHED"){
+        const installationStartedImage = document.getElementById('installation_started')
+        const installationFinishedImage = document.getElementById('installation_finished')
+        const okHitbox = document.getElementById('ok_hitbox')
+        installationStartedImage.style.visibility = 'hidden'
+        installationFinishedImage.style.visibility = 'visible'
+        installationStartedImage.classList.remove('show_alert')
+        okHitbox.style.visibility = 'visible'
+        okHitbox.addEventListener('mouseover', () => {
+            playHoverSoundEffect()
+        })
+        okHitbox.addEventListener('click', () => {
+            playSelectSoundEffect()
+            okHitbox.style.visibility = 'hidden'
+            installationFinishedImage.style.visibility = 'hidden'
+            installHitbox.style.visibility = 'visible'
+            optionsHitbox.style.visibility = 'visible'
+            exitHitbox.style.visibility = 'visible'
+            installationStartedText.innerHTML = ""
+        })
+        return
+    }
+    installationStartedText.innerHTML = status
+}
 
 exitHitbox.addEventListener('click', () => {
     pywebview.api.exit()
 })
 
-function showAlreadyExistingInstallationAlert(){
+function showInstallationStartedAlert(){
+    installHitbox.style.visibility = 'hidden'
+    optionsHitbox.style.visibility = 'hidden'
+    exitHitbox.style.visibility = 'hidden'
+    const installationStartedImage = document.getElementById('installation_started')
+    installationStartedImage.style.visibility = 'visible'
+    installationStartedImage.classList.add('show_alert')
+    installationStartedText.innerHTML = "Starting download of the mod..."
+}
+
+async function showNoDanganronpaInstalledAlert(){
+    const warningNo = document.getElementById('warning_no_danganronpa_installation_found_no')
+    const warningYes = document.getElementById('warning_no_danganronpa_installation_found_yes')
+    return await showAlert(warningNo, warningYes)
+}
+
+async function showAlreadyExistingInstallationAlert(){
     const warningNo = document.getElementById('warning_existing_installation_found_no')
     const warningYes = document.getElementById('warning_existing_installation_found_yes')
-    showAlert(warningNo, warningYes)
+    return await showAlert(warningNo, warningYes)
 }
 
 function showAlert(noImage, yesImage){
@@ -80,11 +139,11 @@ function showAlert(noImage, yesImage){
     }
     noHitbox.addEventListener('mouseover', noHitboxMouseover)
     yesHitbox.addEventListener('mouseover', yesHitboxMouseover)
-    getAnswer()
-        .then(() => pywebview.api.answered_yes())
+    return getAnswer()
+        .then(() => "yes")
         .catch(() => {
-            pywebview.api.answered_no()
             selected = "options"
+            return "no"
         })
         .finally(() => {
             playSelectSoundEffect()
