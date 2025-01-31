@@ -9,7 +9,7 @@ import webview
 import json
 
 mod_foldername = "drv3.rewrite.resoluterebellion"
-mod_download_link = "https://gamebanana.com/dl/1319908"
+mod_download_link = "https://github.com/silicon-git/ResoluteRebellion-releases/releases/download/release/drv3.rewrite.resoluterebellion.7z"
 
 reloaded_installation_foldername = "Reloaded II (Resolute Rebellion)"
 documents_folder_path = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Documents') 
