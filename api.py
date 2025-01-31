@@ -10,7 +10,7 @@ class Api:
         webview.windows[0].destroy()
 
     def install(self, danganronpa_path):
-        #download_mod()
+        download_mod()
         send_message_about_installation_status('Finished downloading mod. Copying Reloaded Installation and installing the mod...')
         extract_and_store_reloaded_installation(mod_user_configured_path)
         update_reloaded_app_location(mod_user_configured_path, drv3_user_configured_path)
