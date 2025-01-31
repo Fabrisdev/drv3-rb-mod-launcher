@@ -62,7 +62,7 @@ def create_shortcut(danganronpa_path, reloaded_path):
     shortcut = shell.CreateShortCut(f'{desktop}/Danganronpa V3 Resolute Rebellion.lnk')
     shortcut.TargetPath = f'{reloaded_executable}'
     shortcut.Arguments = f'--launch "{game_executable}"'
-    shortcut.IconLocation = game_executable
+    shortcut.IconLocation = os.path.abspath(resource_path('maki.ico'))
     if reloaded_path != "": shortcut.WorkingDirectory = reloaded_path
     else: shortcut.WorkingDirectory = os.path.join(documents_folder_path, reloaded_installation_foldername)
     shortcut.save()
