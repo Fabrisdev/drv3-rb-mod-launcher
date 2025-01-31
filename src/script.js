@@ -95,6 +95,23 @@ exitHitbox.addEventListener('click', () => {
     pywebview.api.exit()
 })
 
+optionsHitbox.addEventListener('click', async () => {
+    const answer = await showOptionsAlert()
+    const answers = {
+        "no": "drv3",
+        "yes": "mod"
+    }
+    const answerParsed = answers[answer]
+    if(answerParsed === "drv3") return pywebview.api.change_drv3_path()
+    pywebview.api.change_mod_path()
+})
+
+async function showOptionsAlert(){
+    const drv3Option = document.getElementById("options_drv3")
+    const modOption = document.getElementById("options_mod")
+    return await showAlert(drv3Option, modOption)
+}
+
 function showInstallationStartedAlert(){
     installHitbox.style.visibility = 'hidden'
     optionsHitbox.style.visibility = 'hidden'
