@@ -64,6 +64,10 @@
   {
    "optionDest": "datas",
    "value": "src;src/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "maki.ico;."
   }
  ],
  "nonPyinstallerOptions": {
