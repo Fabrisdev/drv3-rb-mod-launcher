@@ -57,12 +57,13 @@ def create_shortcut(danganronpa_path, reloaded_path):
     if danganronpa_path != "STEAM_PATH": game_executable = danganronpa_path
     if reloaded_path != "": reloaded_executable = os.path.join(reloaded_path, "Reloaded-II.exe")
     else: reloaded_executable = os.path.join(documents_folder_path, reloaded_installation_foldername, "Reloaded-II.exe")
+    shutil.copy(resource_path('maki.ico'), os.path.dirname(reloaded_executable))
     desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop') 
     shell = Dispatch('WScript.Shell')
     shortcut = shell.CreateShortCut(f'{desktop}/Danganronpa V3 Resolute Rebellion.lnk')
     shortcut.TargetPath = f'{reloaded_executable}'
     shortcut.Arguments = f'--launch "{game_executable}"'
-    shortcut.IconLocation = os.path.abspath(resource_path('maki.ico'))
+    shortcut.IconLocation = os.path.join(os.path.dirname(reloaded_executable), 'maki.ico')
     if reloaded_path != "": shortcut.WorkingDirectory = reloaded_path
     else: shortcut.WorkingDirectory = os.path.join(documents_folder_path, reloaded_installation_foldername)
     shortcut.save()
