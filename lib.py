@@ -59,6 +59,7 @@ def create_shortcut(danganronpa_path, reloaded_path):
     else: reloaded_executable = os.path.join(documents_folder_path, reloaded_installation_foldername, "Reloaded-II.exe")
     shutil.copy(resource_path('maki.ico'), os.path.dirname(reloaded_executable))
     desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop') 
+    if not os.path.exists(desktop): desktop = os.path.join(os.environ["USERPROFILE"], "OneDrive", "Desktop")
     shell = Dispatch('WScript.Shell')
     shortcut = shell.CreateShortCut(f'{desktop}/Danganronpa V3 Resolute Rebellion.lnk')
     shortcut.TargetPath = f'{reloaded_executable}'
