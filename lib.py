@@ -128,4 +128,5 @@ def check_game_integrity(danganronpa_path):
     files_to_check = ["partition_data_win.cpk", "partition_data_win_us.cpk", "partition_resident_win.cpk"]
     for file in files_to_check:
         path_to_file = os.path.abspath(os.path.join(path_to_game_data, file))
+        if not os.path.exists(path_to_file): return send_message_about_installation_status("INSTALL FAILED MODIFIED GAME")
         check_file_with_sha512(path_to_file)
