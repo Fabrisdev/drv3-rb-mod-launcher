@@ -125,8 +125,12 @@ def check_game_integrity(danganronpa_path):
     if danganronpa_path != "STEAM_PATH": game_executable = danganronpa_path
     path_to_game_data = os.path.join(os.path.dirname(game_executable), "data", "win")
     if not os.path.exists(path_to_game_data): return send_message_about_installation_status("INSTALL FAILED MODIFIED GAME")
-    files_to_check = ["partition_data_win.cpk", "partition_data_win_us.cpk", "partition_resident_win.cpk"]
-    for file in files_to_check:
+    files_to_check = {
+        "partition_data_win.cpk": "53ea22e09d98029f88a4565d230d842ce4f6097ad6138073e54aa0a8d6e6bc397bc2e8b33b19d6b4b0a9c727d6b0796147b46e0409c1fc17d64a09fb1536e2c2", 
+        "partition_data_win_us.cpk": "c0e03d82833c4d6e9c60e1517c1a2933a914bcd12383a1278d773b5e07d582901812e0331e9dc58b89a4462e2f2400238f9f40c7f3694d8c1ca8f4ef64ee442b", 
+        "partition_resident_win.cpk": "10ac990ea8fb9b2f7ee68b23aeb61b998fc21c4092bf8f6327aadd80c1227bd9e850e85e95f0bc8093de6d652fe7c43f56588ab24db471ef66e6bfc3208b489d"
+    }
+    for file, hash in files_to_check.values():
         path_to_file = os.path.abspath(os.path.join(path_to_game_data, file))
         if not os.path.exists(path_to_file): return send_message_about_installation_status("INSTALL FAILED MODIFIED GAME")
         check_file_with_sha512(path_to_file)
