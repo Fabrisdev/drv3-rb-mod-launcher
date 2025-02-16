@@ -71,7 +71,7 @@ def create_shortcut(danganronpa_path, reloaded_path):
 
 def show_progress(block_num, block_size, total_size):
     percentage = round(block_num * block_size / total_size *100,2)
-    webview.windows[0].evaluate_js(f'showInstallationStatus("Download of the mod has started. Current percentage: <br>{percentage}%")')
+    send_message_about_installation_status(f"Download of the mod has started. Current percentage: <br>{percentage}%")
 
 def has_danganronpa_installed():
     return os.path.exists(game_executable)
