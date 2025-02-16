@@ -125,6 +125,7 @@ def check_game_integrity(danganronpa_path):
     if danganronpa_path != "STEAM_PATH": game_executable = danganronpa_path
     path_to_game_data = os.path.join(os.path.dirname(game_executable), "data", "win")
     if not os.path.exists(path_to_game_data): 
+        send_message_about_installation_status("Your game installation seems to be either corrupt or already modified by another mod. Installation has failed")
         send_message_about_installation_status("INSTALL FAILED MODIFIED GAME")
         return "MODIFIED"
     files_to_check = {
@@ -135,9 +136,11 @@ def check_game_integrity(danganronpa_path):
     for file, hash in files_to_check.items():
         path_to_file = os.path.abspath(os.path.join(path_to_game_data, file))
         if not os.path.exists(path_to_file): 
+            send_message_about_installation_status("Your game installation seems to be either corrupt or already modified by another mod. Installation has failed")
             send_message_about_installation_status("INSTALL FAILED MODIFIED GAME")
             return "MODIFIED"
         hash_obtained = check_file_with_sha512(path_to_file)
         if hash != hash_obtained: 
+            send_message_about_installation_status("Your game installation seems to be either corrupt or already modified by another mod. Installation has failed")
             send_message_about_installation_status("INSTALL FAILED MODIFIED GAME")
             return "MODIFIED"
