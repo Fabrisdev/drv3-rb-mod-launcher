@@ -121,6 +121,7 @@ def send_message_about_game_integrity_check_status(file_path, read_percentage):
     send_message_about_installation_status(check_order[file_name_with_extension])
 
 def check_game_integrity(danganronpa_path):
+    game_executable = os.path.join(program_files_x86_folder_path, "Steam", "steamapps", "common", "Danganronpa V3 Killing Harmony", "Dangan3Win.exe")
     if danganronpa_path != "STEAM_PATH": game_executable = danganronpa_path
     path_to_game_data = os.path.join(os.path.dirname(game_executable), "data", "win")
     if not os.path.exists(path_to_game_data): return send_message_about_installation_status("INSTALL FAILED MODIFIED GAME")
