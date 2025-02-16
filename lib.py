@@ -112,7 +112,7 @@ def check_file_with_sha512(file_path):
 
 def send_message_about_game_integrity_check_status(file_path, read_percentage):
     file_name_with_extension = os.path.basename(file_path)
-    text = f"Checking game's integrity {read_percentage}"
+    text = f"Checking game's integrity {read_percentage:.2f}%"
     check_order = {
         "partition_data_win.cpk": f"{text} (1/3)",
         "partition_data_win_us.cpk": f"{text} (2/3)",
