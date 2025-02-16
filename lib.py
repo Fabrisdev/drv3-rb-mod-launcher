@@ -7,6 +7,7 @@ from win32com.client import Dispatch
 import sys
 import webview
 import json
+import hashlib
 
 mod_foldername = "drv3.rewrite.resoluterebellion"
 mod_download_link = "https://github.com/silicon-git/ResoluteRebellion-releases/releases/download/release/drv3.rewrite.resoluterebellion.7z"
@@ -95,3 +96,26 @@ def update_reloaded_app_location(reloaded_path, danganronpa_path):
         data["WorkingDirectory"] = os.path.join(program_files_x86_folder_path, "Steam", "steamapps", "common", "Danganronpa V3 Killing Harmony")
     with open(file_location, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)  
+
+def get_sha512(file_path):
+    block_size = 1048576
+    hasher = hashlib.sha512()
+    file_size = os.path.getsize(file_path)
+    read = 0 
+    with open(file_path, "rb") as f:
+        for bloque in iter(lambda: f.read(block_size), b""):
+            hasher.update(bloque)
+            read += len(bloque)
+            read_percentage = (read / file_size) * 100
+            send_message_about_game_integrity_check_status(file_path, read_percentage)
+    return hasher.hexdigest()
+
+def send_message_about_game_integrity_check_status(file_path, read_percentage):
+    file_name_with_extension = os.path.basename(file_path)
+    text = f"Checking game's integrity {read_percentage}"
+    check_order = {
+        "partition_data_win.cpk": f"{text} (1/3)",
+        "partition_data_win_us.cpk": f"{text} (2/3)",
+        "partition_resident_win.cpk": f"{text} (3/3)"
+    }
+    send_message_about_installation_status(check_order[file_name_with_extension])
