@@ -124,7 +124,9 @@ def check_game_integrity(danganronpa_path):
     game_executable = os.path.join(program_files_x86_folder_path, "Steam", "steamapps", "common", "Danganronpa V3 Killing Harmony", "Dangan3Win.exe")
     if danganronpa_path != "STEAM_PATH": game_executable = danganronpa_path
     path_to_game_data = os.path.join(os.path.dirname(game_executable), "data", "win")
-    if not os.path.exists(path_to_game_data): return send_message_about_installation_status("INSTALL FAILED MODIFIED GAME")
+    if not os.path.exists(path_to_game_data): 
+        send_message_about_installation_status("INSTALL FAILED MODIFIED GAME")
+        return "MODIFIED"
     files_to_check = {
         "partition_data_win.cpk": "53ea22e09d98029f88a4565d230d842ce4f6097ad6138073e54aa0a8d6e6bc397bc2e8b33b19d6b4b0a9c727d6b0796147b46e0409c1fc17d64a09fb1536e2c2", 
         "partition_data_win_us.cpk": "c0e03d82833c4d6e9c60e1517c1a2933a914bcd12383a1278d773b5e07d582901812e0331e9dc58b89a4462e2f2400238f9f40c7f3694d8c1ca8f4ef64ee442b", 
@@ -132,6 +134,10 @@ def check_game_integrity(danganronpa_path):
     }
     for file, hash in files_to_check.items():
         path_to_file = os.path.abspath(os.path.join(path_to_game_data, file))
-        if not os.path.exists(path_to_file): return send_message_about_installation_status("INSTALL FAILED MODIFIED GAME")
+        if not os.path.exists(path_to_file): 
+            send_message_about_installation_status("INSTALL FAILED MODIFIED GAME")
+            return "MODIFIED"
         hash_obtained = check_file_with_sha512(path_to_file)
-        if hash != hash_obtained: return send_message_about_installation_status("INSTALL FAILED MODIFIED GAME")
+        if hash != hash_obtained: 
+            send_message_about_installation_status("INSTALL FAILED MODIFIED GAME")
+            return "MODIFIED"
