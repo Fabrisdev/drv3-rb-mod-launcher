@@ -97,7 +97,7 @@ def update_reloaded_app_location(reloaded_path, danganronpa_path):
     with open(file_location, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)  
 
-def get_sha512(file_path):
+def check_file_with_sha512(file_path):
     block_size = 1048576
     hasher = hashlib.sha512()
     file_size = os.path.getsize(file_path)
