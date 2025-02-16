@@ -133,4 +133,5 @@ def check_game_integrity(danganronpa_path):
     for file, hash in files_to_check.values():
         path_to_file = os.path.abspath(os.path.join(path_to_game_data, file))
         if not os.path.exists(path_to_file): return send_message_about_installation_status("INSTALL FAILED MODIFIED GAME")
-        check_file_with_sha512(path_to_file)
+        hash_obtained = check_file_with_sha512(path_to_file)
+        if hash != hash_obtained: return send_message_about_installation_status("INSTALL FAILED MODIFIED GAME")
