@@ -10,6 +10,8 @@ class Api:
         webview.windows[0].destroy()
 
     def install(self, danganronpa_path):
+        if drv3_user_configured_path != "": check_game_integrity(drv3_user_configured_path)
+        else: check_game_integrity(danganronpa_path)
         download_mod()
         send_message_about_installation_status('Finished downloading mod. Copying Reloaded Installation and installing the mod...')
         extract_and_store_reloaded_installation(mod_user_configured_path)
