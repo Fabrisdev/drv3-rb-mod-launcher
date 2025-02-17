@@ -17,6 +17,7 @@ documents_folder_path = os.path.join(os.path.join(os.environ['USERPROFILE']), 'D
 temp_folder_path = tempfile.gettempdir()
 program_files_x86_folder_path = os.environ["ProgramFiles(x86)"]
 game_executable = os.path.join(program_files_x86_folder_path, "Steam", "steamapps", "common", "Danganronpa V3 Killing Harmony", "Dangan3Win.exe")
+should_skip_game_integrity_check = False
 
 def download_mod():
     urlretrieve(mod_download_link, os.path.join(temp_folder_path, "resolute_rebellion.7z"), show_progress)
@@ -104,6 +105,7 @@ def check_file_with_sha512(file_path):
     read = 0 
     with open(file_path, "rb") as f:
         for bloque in iter(lambda: f.read(block_size), b""):
+            if should_skip_game_integrity_check: return
             hasher.update(bloque)
             read += len(bloque)
             read_percentage = (read / file_size) * 100
@@ -133,11 +135,13 @@ def check_game_integrity(danganronpa_path):
         "partition_resident_win.cpk": "10ac990ea8fb9b2f7ee68b23aeb61b998fc21c4092bf8f6327aadd80c1227bd9e850e85e95f0bc8093de6d652fe7c43f56588ab24db471ef66e6bfc3208b489d"
     }
     for file, hash in files_to_check.items():
+        if should_skip_game_integrity_check: return "SKIPPED"
         path_to_file = os.path.abspath(os.path.join(path_to_game_data, file))
         if not os.path.exists(path_to_file): 
             send_message_about_game_installation_modified()
             return "MODIFIED"
         hash_obtained = check_file_with_sha512(path_to_file)
+        if should_skip_game_integrity_check: return "SKIPPED"
         if hash != hash_obtained: 
             send_message_about_game_installation_modified()
             return "MODIFIED"
@@ -145,3 +149,7 @@ def check_game_integrity(danganronpa_path):
 def send_message_about_game_installation_modified():
     send_message_about_installation_status("Your game installation seems to be either corrupt or already modified by another mod. Please repair your DRV3 installation.")
     send_message_about_installation_status("INSTALL FINISHED")
+
+def skip_game_integrity_check():
+    global should_skip_game_integrity_check
+    should_skip_game_integrity_check = True

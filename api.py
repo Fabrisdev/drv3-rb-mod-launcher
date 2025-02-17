@@ -58,3 +58,6 @@ class Api:
         global mod_user_configured_path
         if mod_path == "": return
         mod_user_configured_path = mod_path
+
+    def skip_game_integrity_check(self):
+        skip_game_integrity_check()
