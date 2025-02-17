@@ -91,6 +91,10 @@ function showInstallationStatus(status){
     installationStartedText.innerHTML = status
 }
 
+function showStartedCheckingGameIntegrityAlert(){
+    
+}
+
 exitHitbox.addEventListener('click', () => {
     pywebview.api.exit()
 })
