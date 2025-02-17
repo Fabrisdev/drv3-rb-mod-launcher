@@ -143,5 +143,5 @@ def check_game_integrity(danganronpa_path):
             return "MODIFIED"
         
 def send_message_about_game_installation_modified():
-    send_message_about_installation_status("Your game installation seems to be either corrupt or already modified by another mod. Installation has failed")
+    send_message_about_installation_status("Your game installation seems to be either corrupt or already modified by another mod. Please repair your DRV3 installation or place the vanilla .CPK files back into their original folders.")
     send_message_about_installation_status("INSTALL FAILED MODIFIED GAME")
