@@ -96,6 +96,24 @@ function showStartedCheckingGameIntegrityAlert(){
     const integrityCheckHoverSkipImage = document.getElementById('integrity_check_hover_skip')
     integrityCheckImage.style.visibility = 'visible'
     integrityCheckImage.classList.add('show_alert')
+    const skipHitbox = document.getElementById('ok_hitbox')
+    skipHitbox.style.visibility = 'visible'
+    function skipHitboxMouseOver() {
+        playHoverSoundEffect()
+        integrityCheckHoverSkipImage.style.visibility = 'visible'
+        integrityCheckImage.style.visibility = 'hidden'
+    }
+    skipHitbox.addEventListener('mouseover', skipHitboxMouseOver)
+    function skipHitboxClick() {
+        pywebview.api.skip_game_integrity_check()
+        showIntegrityCheckStatus('STOP')
+        integrityCheckHoverSkipImage.style.visibility = 'hidden'
+        integrityCheckImage.style.visibility = 'hidden'
+        skipHitbox.removeEventListener('mouseover', skipHitboxMouseOver)
+        skipHitbox.removeEventListener('click', skipHitboxClick)
+        skipHitbox.style.visibility = 'hidden'
+    }
+    skipHitbox.addEventListener('click', skipHitboxClick)
 }
 
 function stopShowingCheckingGameIntegrityAlert(){
@@ -106,7 +124,11 @@ function stopShowingCheckingGameIntegrityAlert(){
     integrityCheckImage.classList.remove('show_alert')
 }
 
+let shouldContinueUpdatingIntegrityStatus = true
+
 function showIntegrityCheckStatus(status){
+    if (status === "STOP") shouldContinueUpdatingIntegrityStatus = false
+    if (shouldContinueUpdatingIntegrityStatus === false) return installationStartedText.innerHTML = "Integrity check has been skipped. Stopping integrity check..."
     installationStartedText.innerHTML = status
 }
 
