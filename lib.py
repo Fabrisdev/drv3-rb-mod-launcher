@@ -148,8 +148,12 @@ def check_game_integrity(danganronpa_path):
             return "MODIFIED"
         
 def send_message_about_game_installation_modified():
+    stop_showing_checking_game_integrity()
     send_message_about_installation_status("Your game installation seems to be either corrupt or already modified by another mod. Please repair your DRV3 installation.")
     send_message_about_installation_status("INSTALL FINISHED")
+
+def stop_showing_checking_game_integrity():
+    webview.windows[0].evaluate_js(f'stopShowingCheckingGameIntegrityAlert()')
 
 def skip_game_integrity_check():
     global should_skip_game_integrity_check
