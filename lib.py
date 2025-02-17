@@ -146,6 +146,7 @@ def check_game_integrity(danganronpa_path):
         if hash != hash_obtained: 
             send_message_about_game_installation_modified()
             return "MODIFIED"
+    stop_showing_checking_game_integrity()
         
 def send_message_about_game_installation_modified():
     stop_showing_checking_game_integrity()
