@@ -66,7 +66,7 @@ installHitbox.addEventListener('click', async () => {
 })
 
 function showInstallationStatus(status){
-    if(status === "INSTALL FINISHED" || status === "INSTALL FAILED MODIFIED GAME"){
+    if(status === "INSTALL FINISHED"){
         const installationStartedImage = document.getElementById('installation_started')
         const installationFinishedImage = document.getElementById('installation_finished')
         const okHitbox = document.getElementById('ok_hitbox')
