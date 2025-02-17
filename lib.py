@@ -135,12 +135,22 @@ def check_game_integrity(danganronpa_path):
         "partition_data_win_us.cpk": "c0e03d82833c4d6e9c60e1517c1a2933a914bcd12383a1278d773b5e07d582901812e0331e9dc58b89a4462e2f2400238f9f40c7f3694d8c1ca8f4ef64ee442b", 
         "partition_resident_win.cpk": "10ac990ea8fb9b2f7ee68b23aeb61b998fc21c4092bf8f6327aadd80c1227bd9e850e85e95f0bc8093de6d652fe7c43f56588ab24db471ef66e6bfc3208b489d"
     }
+    missing_files = []
+    for file, hash in files_to_check.items():
+        path_to_file = os.path.abspath(os.path.join(path_to_game_data, file))
+        if not os.path.exists(path_to_file): missing_files.append(os.path.splitext(file)[0])
+    if len(missing_files) == 1 and missing_files[0] == "partition_data_win_us":
+        send_message_about_cpk_missing(f"{missing_files[0]} CPK is missing. Please make sure you're playing in English. Otherwise, repair your install.")
+        return "MODIFIED"
+    if len(missing_files) == 1:
+        send_message_about_cpk_missing(f"{missing_files[0]} CPK is missing. Please make sure it's in data/win. Otherwise, repair your install.")
+        return "MODIFIED"
+    if len(missing_files) >= 2:
+        send_message_about_cpk_missing(f"{', '.join(missing_files)} CPKs are missing. Please make sure they are in data/win. Otherwise, repair your install.")
+        return "MODIFIED"
     for file, hash in files_to_check.items():
         if should_skip_game_integrity_check: return "SKIPPED"
         path_to_file = os.path.abspath(os.path.join(path_to_game_data, file))
-        if not os.path.exists(path_to_file): 
-            send_message_about_game_installation_modified()
-            return "MODIFIED"
         hash_obtained = check_file_with_sha512(path_to_file)
         if should_skip_game_integrity_check: return "SKIPPED"
         if hash != hash_obtained: 
@@ -151,6 +161,11 @@ def check_game_integrity(danganronpa_path):
 def send_message_about_game_installation_modified():
     stop_showing_checking_game_integrity()
     send_message_about_installation_status("Your game installation seems to be either corrupt or already modified by another mod. Please repair your DRV3 installation.")
+    send_message_about_installation_status("INSTALL FINISHED")
+
+def send_message_about_cpk_missing(message):
+    stop_showing_checking_game_integrity()
+    send_message_about_installation_status(message)
     send_message_about_installation_status("INSTALL FINISHED")
 
 def stop_showing_checking_game_integrity():
