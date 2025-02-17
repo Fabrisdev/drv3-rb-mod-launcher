@@ -120,7 +120,7 @@ def send_message_about_game_integrity_check_status(file_path, read_percentage):
         "partition_data_win_us.cpk": f"{text} (2/3)",
         "partition_resident_win.cpk": f"{text} (3/3)"
     }
-    send_message_about_installation_status(check_order[file_name_with_extension])
+    send_message_about_integrity_check_status(check_order[file_name_with_extension])
 
 def check_game_integrity(danganronpa_path):
     show_started_checking_game_integrity()
@@ -157,3 +157,6 @@ def skip_game_integrity_check():
 
 def show_started_checking_game_integrity():
     webview.windows[0].evaluate_js(f'showStartedCheckingGameIntegrityAlert()')
+
+def send_message_about_integrity_check_status(message):
+    webview.windows[0].evaluate_js(f'showIntegrityCheckStatus("{message}")')
