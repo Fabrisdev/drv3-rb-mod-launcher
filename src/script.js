@@ -92,7 +92,10 @@ function showInstallationStatus(status){
 }
 
 function showStartedCheckingGameIntegrityAlert(){
-
+    const integrityCheckImage = document.getElementById('integrity_check_skip')
+    const integrityCheckHoverSkipImage = document.getElementById('integrity_check_hover_skip')
+    integrityCheckImage.style.visibility = 'visible'
+    integrityCheckImage.classList.add('show_alert')
 }
 
 function showIntegrityCheckStatus(status){
