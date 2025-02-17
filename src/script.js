@@ -92,7 +92,11 @@ function showInstallationStatus(status){
 }
 
 function showStartedCheckingGameIntegrityAlert(){
-    
+
+}
+
+function showIntegrityCheckStatus(status){
+    installationStartedText.innerHTML = status
 }
 
 exitHitbox.addEventListener('click', () => {
