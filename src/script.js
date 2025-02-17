@@ -128,8 +128,8 @@ function stopShowingCheckingGameIntegrityAlert(){
     integrityCheckHoverSkipImage.style.visibility = 'hidden'
     integrityCheckImage.classList.remove('show_alert')
     const skipHitbox = document.getElementById('ok_hitbox')
-    skipHitbox.addEventListener('mouseover', skipHitboxMouseOver)
-    skipHitbox.addEventListener('click', skipHitboxClick)
+    skipHitbox.removeEventListener('mouseover', skipHitboxMouseOver)
+    skipHitbox.removeEventListener('click', skipHitboxClick)
 }
 
 let shouldContinueUpdatingIntegrityStatus = true
