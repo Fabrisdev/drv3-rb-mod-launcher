@@ -98,6 +98,14 @@ function showStartedCheckingGameIntegrityAlert(){
     integrityCheckImage.classList.add('show_alert')
 }
 
+function stopShowingCheckingGameIntegrityAlert(){
+    const integrityCheckImage = document.getElementById('integrity_check_skip')
+    const integrityCheckHoverSkipImage = document.getElementById('integrity_check_hover_skip')
+    integrityCheckImage.style.visibility = 'hidden'
+    integrityCheckHoverSkipImage.style.visibility = 'hidden'
+    integrityCheckImage.classList.remove('show_alert')
+}
+
 function showIntegrityCheckStatus(status){
     installationStartedText.innerHTML = status
 }
