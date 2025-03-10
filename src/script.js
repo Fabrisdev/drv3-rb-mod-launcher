@@ -158,7 +158,7 @@ optionsHitbox.addEventListener('click', async () => {
 async function showOptionsAlert(){
     const drv3Option = document.getElementById("options_drv3")
     const modOption = document.getElementById("options_mod")
-    return await showAlert(drv3Option, modOption)
+    return await showAlert(drv3Option, modOption, true)
 }
 
 function showInstallationStartedAlert(){
@@ -183,7 +183,7 @@ async function showAlreadyExistingInstallationAlert(){
     return await showAlert(warningNo, warningYes)
 }
 
-function showAlert(noImage, yesImage){
+function showAlert(noImage, yesImage, cancellingAllowed = false){
     const noHitbox = document.getElementById('no_hitbox')
     const yesHitbox = document.getElementById('yes_hitbox')
     installHitbox.style.visibility = 'hidden'
