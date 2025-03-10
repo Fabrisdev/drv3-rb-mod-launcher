@@ -151,8 +151,9 @@ optionsHitbox.addEventListener('click', async () => {
         "yes": "mod"
     }
     const answerParsed = answers[answer]
+    console.log(answer)
     if(answerParsed === "drv3") return pywebview.api.change_drv3_path()
-    pywebview.api.change_mod_path()
+    if(answerParsed === "mod") return pywebview.api.change_mod_path()
 })
 
 async function showOptionsAlert(){
@@ -205,35 +206,55 @@ function showAlert(noImage, yesImage, cancellingAllowed = false){
     }
     noHitbox.addEventListener('mouseover', noHitboxMouseover)
     yesHitbox.addEventListener('mouseover', yesHitboxMouseover)
-    return getAnswer()
-        .then(() => "yes")
-        .catch(() => {
-            selected = "options"
-            return "no"
+    const controller = new AbortController() 
+    return new Promise((resolve) => {
+        document.addEventListener("keyup", event => {
+            if(event.key === "Escape" && cancellingAllowed) {
+                noImage.style.visibility = 'hidden'
+                yesImage.style.visibility = 'hidden'
+                noHitbox.removeEventListener('mouseover', noHitboxMouseover)
+                yesHitbox.removeEventListener('mouseover', yesHitboxMouseover)
+                installHitbox.style.visibility = 'visible'
+                optionsHitbox.style.visibility = 'visible'
+                exitHitbox.style.visibility = 'visible'
+                noImage.classList.remove('show_alert')
+                resolve("cancelled")
+                controller.abort()
+            }
+        }, {
+            signal: controller.signal
         })
-        .finally(() => {
-            playSelectSoundEffect()
-            noImage.style.visibility = 'hidden'
-            yesImage.style.visibility = 'hidden'
-            noHitbox.removeEventListener('mouseover', noHitboxMouseover)
-            yesHitbox.removeEventListener('mouseover', yesHitboxMouseover)
-            installHitbox.style.visibility = 'visible'
-            optionsHitbox.style.visibility = 'visible'
-            exitHitbox.style.visibility = 'visible'
-            noImage.classList.remove('show_alert')
-        })
+        getAnswer(controller.signal)
+            .then(() => resolve("yes"))
+            .catch(() => {
+                selected = "options"
+                return resolve("no")
+            })
+            .finally(() => {
+                playSelectSoundEffect()
+                noImage.style.visibility = 'hidden'
+                yesImage.style.visibility = 'hidden'
+                noHitbox.removeEventListener('mouseover', noHitboxMouseover)
+                yesHitbox.removeEventListener('mouseover', yesHitboxMouseover)
+                installHitbox.style.visibility = 'visible'
+                optionsHitbox.style.visibility = 'visible'
+                exitHitbox.style.visibility = 'visible'
+                noImage.classList.remove('show_alert')
+                controller.abort()
+            })
+    })
 }
 
-function getAnswer(){
+function getAnswer(signal = new AbortController().signal){
     const noHitbox = document.getElementById('no_hitbox')
     const yesHitbox = document.getElementById('yes_hitbox')
     const answer = new Promise((resolve, reject) => {
         noHitbox.addEventListener('click', () => {
             reject()
-        })
+        }, { signal })
         yesHitbox.addEventListener('click', () => {
             resolve()
-        })
+        }, { signal })
     })
     return answer
 }
