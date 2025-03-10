@@ -207,17 +207,20 @@ function showAlert(noImage, yesImage, cancellingAllowed = false){
     noHitbox.addEventListener('mouseover', noHitboxMouseover)
     yesHitbox.addEventListener('mouseover', yesHitboxMouseover)
     const controller = new AbortController() 
+    function closeAlert(){
+        noImage.style.visibility = 'hidden'
+        yesImage.style.visibility = 'hidden'
+        noHitbox.removeEventListener('mouseover', noHitboxMouseover)
+        yesHitbox.removeEventListener('mouseover', yesHitboxMouseover)
+        installHitbox.style.visibility = 'visible'
+        optionsHitbox.style.visibility = 'visible'
+        exitHitbox.style.visibility = 'visible'
+        noImage.classList.remove('show_alert')
+    }
     return new Promise((resolve) => {
         document.addEventListener("keyup", event => {
             if(event.key === "Escape" && cancellingAllowed) {
-                noImage.style.visibility = 'hidden'
-                yesImage.style.visibility = 'hidden'
-                noHitbox.removeEventListener('mouseover', noHitboxMouseover)
-                yesHitbox.removeEventListener('mouseover', yesHitboxMouseover)
-                installHitbox.style.visibility = 'visible'
-                optionsHitbox.style.visibility = 'visible'
-                exitHitbox.style.visibility = 'visible'
-                noImage.classList.remove('show_alert')
+                closeAlert()
                 resolve("cancelled")
                 controller.abort()
             }
@@ -232,14 +235,7 @@ function showAlert(noImage, yesImage, cancellingAllowed = false){
             })
             .finally(() => {
                 playSelectSoundEffect()
-                noImage.style.visibility = 'hidden'
-                yesImage.style.visibility = 'hidden'
-                noHitbox.removeEventListener('mouseover', noHitboxMouseover)
-                yesHitbox.removeEventListener('mouseover', yesHitboxMouseover)
-                installHitbox.style.visibility = 'visible'
-                optionsHitbox.style.visibility = 'visible'
-                exitHitbox.style.visibility = 'visible'
-                noImage.classList.remove('show_alert')
+                closeAlert()
                 controller.abort()
             })
     })
