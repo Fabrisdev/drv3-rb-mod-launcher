@@ -225,6 +225,7 @@ function showAlert(noImage, yesImage, cancellingAllowed = false){
     return new Promise((resolve) => {
         document.addEventListener("keyup", event => {
             if(event.key === "Escape" && cancellingAllowed) {
+                playCancelSoundEffect()
                 closeAlert()
                 resolve("cancelled")
                 controller.abort()
