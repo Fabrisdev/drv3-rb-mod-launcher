@@ -34,6 +34,11 @@ exitHitbox.addEventListener('mouseover', () => {
     selected = "exit"
 })
 
+function playCancelSoundEffect(){
+    const audio = new Audio("sound_effects/cancel.mp3")
+    audio.play()
+}
+
 function playHoverSoundEffect(){
     const audio = new Audio("sound_effects/hover.mp3")
     audio.play()
