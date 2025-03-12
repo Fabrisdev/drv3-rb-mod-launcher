@@ -1,3 +1,5 @@
+import { playSelectSoundEffect, playHoverSoundEffect, playCancelSoundEffect } from "./js/audio.js"
+
 const installSelectedImage = document.getElementById('install_selected_image')
 const optionsSelectedImage = document.getElementById('options_selected_image')
 const exitSelectedImage = document.getElementById('exit_selected_image')
@@ -33,21 +35,6 @@ exitHitbox.addEventListener('mouseover', () => {
     playHoverSoundEffect()
     selected = "exit"
 })
-
-function playCancelSoundEffect(){
-    const audio = new Audio("sound_effects/cancel.mp3")
-    audio.play()
-}
-
-function playHoverSoundEffect(){
-    const audio = new Audio("sound_effects/hover.mp3")
-    audio.play()
-}
-
-function playSelectSoundEffect(){
-    const audio = new Audio("sound_effects/select.mp3")
-    audio.play()
-}
 
 installHitbox.addEventListener('click', async () => {
     playSelectSoundEffect()
