@@ -10,14 +10,18 @@ export function showAlert({ text, buttons, isCancellable }){
     alertText.innerHTML = text
     if(buttons.length === 1){
         buttonIfOnlyOne.style.visibility = 'visible'
+        buttonIfOnlyOne.children[1].innerHTML = buttons[0].text
     }
     if(buttons.length > 1){
         firstButton.style.visibility = 'visible'
+        firstButton.children[1].innerHTML = buttons[0].text
     }
     if(buttons.length >= 2){
         secondButton.style.visibility = 'visible'
+        secondButton.children[1].innerHTML = buttons[1].text
     }
     if(buttons.length >= 3){
         thirdButton.style.visibility = 'visible'
+        thirdButton.children[1].innerHTML = buttons[2].text
     }
 }
