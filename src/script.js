@@ -38,7 +38,8 @@ exitHitbox.addEventListener('mouseover', () => {
 
 installHitbox.addEventListener('click', async () => {
     playSelectSoundEffect()
-    const hasDanganronpaInstalled = await pywebview.api.check_has_danganronpa_installed()
+    
+    /*const hasDanganronpaInstalled = await pywebview.api.check_has_danganronpa_installed()
     let danganronpaFilePath = "STEAM_PATH"
     if(!hasDanganronpaInstalled) {
         const answerToNoDanganronpaInstalled = await showNoDanganronpaInstalledAlert()
@@ -54,7 +55,7 @@ installHitbox.addEventListener('click', async () => {
         if(answerToOldModInstallation === "no") return
     }
     showInstallationStartedAlert()
-    pywebview.api.install(danganronpaFilePath)
+    pywebview.api.install(danganronpaFilePath)*/
 })
 
 function showInstallationStatus(status){
@@ -176,7 +177,7 @@ async function showAlreadyExistingInstallationAlert(){
     return await showAlert(warningNo, warningYes)
 }
 
-function showAlert(noImage, yesImage, cancellingAllowed = false){
+function oldShowAlert(noImage, yesImage, cancellingAllowed = false){
     const noHitbox = document.getElementById('no_hitbox')
     const yesHitbox = document.getElementById('yes_hitbox')
     installHitbox.style.visibility = 'hidden'
