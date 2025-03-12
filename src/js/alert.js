@@ -26,4 +26,20 @@ export function showAlert({ text, buttons, isCancellable }){
         thirdButton.setVisible(true)
         thirdButton.setText(buttons[2].text)
     }
+    const controller = new AbortController()
+    document.addEventListener("keyup", event => {
+        if(event.key === "Escape" && isCancellable) {
+            hideAlert()
+            controller.abort()
+        }
+    }, { signal: controller.signal })
+}
+
+function hideAlert(){
+    alertImage.style.visibility = 'hidden'
+    alertText.innerHTML = ""
+    buttonIfOnlyOne.setVisible(false)
+    firstButton.setVisible(false)
+    secondButton.setVisible(false)
+    thirdButton.setVisible(false)
 }
