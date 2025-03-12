@@ -121,3 +121,34 @@ video{
     text-align: center;
     width: 80%;
 }
+
+.button-container{
+    position: fixed;
+    bottom: 120px;
+    visibility: hidden;
+}
+
+.button-container p{
+    position: absolute;
+    font-family: sans-serif;
+    font-size: 33px;
+    color: #000;
+    z-index: 1000;
+    letter-spacing: 2px;
+    text-align: center;
+    width: 361px;
+    top: 23px;
+}
+
+#button-container-1{
+    left: 260px;
+}
+
+#button-container-2{
+    left: 660px;
+}
+
+#button-container-3{
+    left: 460px;
+    bottom: 200px;
+}
