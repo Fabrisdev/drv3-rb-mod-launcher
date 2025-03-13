@@ -10,23 +10,27 @@ const buttonIfOnlyOne = button(document.getElementById('button-container-if-only
 export function showAlert({ text, buttons, isCancellable }){
     alertImage.style.visibility = 'visible'
     alertText.innerHTML = text
+    const controller = new AbortController()
     if(buttons.length === 1){
         buttonIfOnlyOne.setVisible(true)
         buttonIfOnlyOne.setText(buttons[0].text)
+        buttonIfOnlyOne.onClick(buttons[0].onClick, controller.signal)
     }
     if(buttons.length > 1){
         firstButton.setVisible(true)
         firstButton.setText(buttons[0].text)
+        firstButton.onClick(buttons[0].onClick, controller.signal)
     }
     if(buttons.length >= 2){
         secondButton.setVisible(true)
         secondButton.setText(buttons[1].text)
+        secondButton.onClick(buttons[1].onClick, controller.signal)
     }
     if(buttons.length >= 3){
         thirdButton.setVisible(true)
         thirdButton.setText(buttons[2].text)
+        thirdButton.onClick(buttons[2].onClick, controller.signal)
     }
-    const controller = new AbortController()
     document.addEventListener("keyup", event => {
         if(event.key === "Escape" && isCancellable) {
             hideAlert()
