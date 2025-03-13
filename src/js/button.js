@@ -1,3 +1,5 @@
+import { hideAlert } from "./alert.js"
+
 export function button(element){
     return {
         setVisible: (isVisible) => {
@@ -6,8 +8,12 @@ export function button(element){
         setText: (text) => {
             element.children[1].innerHTML = text
         },
-        onClick: (callback, abortSignal) => {
-            element.addEventListener('click', callback, { signal: abortSignal})
+        onClick: (callback, controller) => {
+            element.addEventListener('click', () => {
+                callback()
+                hideAlert()
+                controller.abort()
+            }, { signal: controller.signal})
         }
     }
 }
