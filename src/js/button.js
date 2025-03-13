@@ -1,7 +1,16 @@
 import { hideAlert } from "./alert.js"
-import { playSelectSoundEffect } from "./audio.js"
+import { playHoverSoundEffect, playSelectSoundEffect } from "./audio.js"
 
 export function button(element){
+    element.addEventListener('mouseover', () => {
+        playHoverSoundEffect()
+        element.classList.add('hovered')
+    })
+
+    element.addEventListener('mouseout', () => {
+        element.classList.remove('hovered')
+    })
+
     return {
         setVisible: (isVisible) => {
             element.style.visibility = isVisible ? 'visible' : 'hidden'
