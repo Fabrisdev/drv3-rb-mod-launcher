@@ -14,22 +14,22 @@ export function showAlert({ text, buttons, isCancellable }){
     if(buttons.length === 1){
         buttonIfOnlyOne.setVisible(true)
         buttonIfOnlyOne.setText(buttons[0].text)
-        buttonIfOnlyOne.onClick(buttons[0].onClick, controller.signal)
+        buttonIfOnlyOne.onClick(buttons[0].onClick, controller)
     }
     if(buttons.length > 1){
         firstButton.setVisible(true)
         firstButton.setText(buttons[0].text)
-        firstButton.onClick(buttons[0].onClick, controller.signal)
+        firstButton.onClick(buttons[0].onClick, controller)
     }
     if(buttons.length >= 2){
         secondButton.setVisible(true)
         secondButton.setText(buttons[1].text)
-        secondButton.onClick(buttons[1].onClick, controller.signal)
+        secondButton.onClick(buttons[1].onClick, controller)
     }
     if(buttons.length >= 3){
         thirdButton.setVisible(true)
         thirdButton.setText(buttons[2].text)
-        thirdButton.onClick(buttons[2].onClick, controller.signal)
+        thirdButton.onClick(buttons[2].onClick, controller)
     }
     document.addEventListener("keyup", event => {
         if(event.key === "Escape" && isCancellable) {
@@ -39,7 +39,7 @@ export function showAlert({ text, buttons, isCancellable }){
     }, { signal: controller.signal })
 }
 
-function hideAlert(){
+export function hideAlert(){
     alertImage.style.visibility = 'hidden'
     alertText.innerHTML = ""
     buttonIfOnlyOne.setVisible(false)
