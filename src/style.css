@@ -126,6 +126,7 @@ video{
     position: fixed;
     bottom: 120px;
     visibility: hidden;
+    z-index: 2000;
 }
 
 .button-container p{
@@ -133,7 +134,7 @@ video{
     font-family: sans-serif;
     font-size: 33px;
     color: #000;
-    z-index: 1000;
+    z-index: 3000;
     letter-spacing: 2px;
     text-align: center;
     width: 361px;
