@@ -1,3 +1,4 @@
+import { playCancelSoundEffect } from "./audio.js"
 import { button } from "./button.js"
 
 const alertImage = document.getElementById("alert-image")
@@ -9,6 +10,7 @@ const buttonIfOnlyOne = button(document.getElementById('button-container-if-only
 
 export function showAlert({ text, buttons, isCancellable }){
     alertImage.style.visibility = 'visible'
+    alertImage.classList.add('show_alert')
     alertText.innerHTML = text
     const controller = new AbortController()
     if(buttons.length === 1){
@@ -34,6 +36,7 @@ export function showAlert({ text, buttons, isCancellable }){
     document.addEventListener("keyup", event => {
         if(event.key === "Escape" && isCancellable) {
             hideAlert()
+            playCancelSoundEffect()
             controller.abort()
         }
     }, { signal: controller.signal })
@@ -41,6 +44,7 @@ export function showAlert({ text, buttons, isCancellable }){
 
 export function hideAlert(){
     alertImage.style.visibility = 'hidden'
+    alertImage.classList.remove('show_alert')
     alertText.innerHTML = ""
     buttonIfOnlyOne.setVisible(false)
     firstButton.setVisible(false)
