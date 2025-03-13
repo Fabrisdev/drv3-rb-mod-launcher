@@ -1,4 +1,5 @@
 import { hideAlert } from "./alert.js"
+import { playSelectSoundEffect } from "./audio.js"
 
 export function button(element){
     return {
@@ -13,6 +14,7 @@ export function button(element){
                 callback()
                 hideAlert()
                 controller.abort()
+                playSelectSoundEffect()
             }, { signal: controller.signal})
         }
     }
