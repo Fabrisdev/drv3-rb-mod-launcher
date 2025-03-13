@@ -5,6 +5,9 @@ export function button(element){
         },
         setText: (text) => {
             element.children[1].innerHTML = text
+        },
+        onClick: (callback, abortSignal) => {
+            element.addEventListener('click', callback, { signal: abortSignal})
         }
     }
 }
