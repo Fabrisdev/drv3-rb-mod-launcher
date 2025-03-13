@@ -2,7 +2,7 @@ import { hideAlert } from "./alert.js"
 import { playHoverSoundEffect, playSelectSoundEffect } from "./audio.js"
 
 export function button(element){
-    const isClickable = true
+    let isClickable = true
 
     element.addEventListener('mouseenter', () => {
         if(!isClickable) return
