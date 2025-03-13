@@ -17,21 +17,25 @@ export function showAlert({ text, buttons, isCancellable }){
         buttonIfOnlyOne.setVisible(true)
         buttonIfOnlyOne.setText(buttons[0].text)
         buttonIfOnlyOne.onClick(buttons[0].onClick, controller)
+        buttonIfOnlyOne.setClickable(buttons[0].isClickable ?? true)
     }
     if(buttons.length > 1){
         firstButton.setVisible(true)
         firstButton.setText(buttons[0].text)
         firstButton.onClick(buttons[0].onClick, controller)
+        firstButton.setClickable(buttons[0].isClickable ?? true)
     }
     if(buttons.length >= 2){
         secondButton.setVisible(true)
         secondButton.setText(buttons[1].text)
         secondButton.onClick(buttons[1].onClick, controller)
+        secondButton.setClickable(buttons[1].isClickable ?? true)
     }
     if(buttons.length >= 3){
         thirdButton.setVisible(true)
         thirdButton.setText(buttons[2].text)
         thirdButton.onClick(buttons[2].onClick, controller)
+        thirdButton.setClickable(buttons[2].isClickable ?? true)
     }
     document.addEventListener("keyup", event => {
         if(event.key === "Escape" && isCancellable) {
