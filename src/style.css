@@ -127,6 +127,7 @@ video{
     bottom: 120px;
     visibility: hidden;
     z-index: 2000;
+    filter: saturate(0) brightness(0.27)
 }
 
 .button-container p{
@@ -156,4 +157,8 @@ video{
 
 #button-container-if-only-one{
     left: 460px;
+}
+
+.hovered{
+    filter: none
 }
