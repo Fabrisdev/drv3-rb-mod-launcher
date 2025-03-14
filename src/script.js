@@ -109,26 +109,6 @@ function showInstallationStatus(status){
 
 window.showInstallationStatus = showInstallationStatus
 
-function skipHitboxMouseOver() {
-    const integrityCheckHoverSkipImage = document.getElementById('integrity_check_hover_skip')
-    const integrityCheckImage = document.getElementById('integrity_check_skip')
-    playHoverSoundEffect()
-    integrityCheckHoverSkipImage.style.visibility = 'visible'
-    integrityCheckImage.style.visibility = 'hidden'
-}
-function skipHitboxClick() {
-    const integrityCheckHoverSkipImage = document.getElementById('integrity_check_hover_skip')
-    const skipHitbox = document.getElementById('ok_hitbox')
-    const integrityCheckImage = document.getElementById('integrity_check_skip')
-    pywebview.api.skip_game_integrity_check()
-    showIntegrityCheckStatus('STOP')
-    integrityCheckHoverSkipImage.style.visibility = 'hidden'
-    integrityCheckImage.style.visibility = 'hidden'
-    skipHitbox.removeEventListener('mouseover', skipHitboxMouseOver)
-    skipHitbox.removeEventListener('click', skipHitboxClick)
-    skipHitbox.style.visibility = 'hidden'
-}
-
 function showStartedCheckingGameIntegrityAlert(){
     showAlert({
         text: "Starting game integrity check...",
