@@ -179,19 +179,21 @@ exitHitbox.addEventListener('click', () => {
 })
 
 optionsHitbox.addEventListener('click', async () => {
-    const answer = await showOptionsAlert()
-    const answers = {
-        "no": "drv3",
-        "yes": "mod"
-    }
-    const answerParsed = answers[answer]
-    console.log(answer)
-    if(answerParsed === "drv3") return pywebview.api.change_drv3_path()
-    if(answerParsed === "mod") return pywebview.api.change_mod_path()
+    showAlert({
+        text: "You can either change the mod's installation path or Danganronpa V3: Killing Harmony's current installation path",
+        buttons: [
+            {
+                text: "MOD",
+                onClick: () => {
+                    pywebview.api.change_mod_path()
+                } 
+            },
+            {
+                text: "DRV3",
+                onClick: () => {
+                    pywebview.api.change_drv3_path()
+                }
+            }
+        ]
+    })
 })
-
-async function showOptionsAlert(){
-    const drv3Option = document.getElementById("options_drv3")
-    const modOption = document.getElementById("options_mod")
-    return await showAlert(drv3Option, modOption, true)
-}
