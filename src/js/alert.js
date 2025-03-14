@@ -15,35 +15,35 @@ export function showAlert({ text, buttons, isCancellable = false }){
     alertImage.style.visibility = 'visible'
     alertImage.classList.add('show_alert')
     alertText.innerHTML = text
-    const controller = new AbortController()
     if(buttons.length === 1){
         buttonIfOnlyOne.setVisible(true)
         buttonIfOnlyOne.setText(buttons[0].text)
-        buttonIfOnlyOne.onClick(buttons[0].onClick, controller)
+        buttonIfOnlyOne.onClick(buttons[0].onClick)
         buttonIfOnlyOne.setClickable(buttons[0].isClickable ?? true)
         buttonsMapped.set(buttons[0].text, buttonIfOnlyOne)
     }
     if(buttons.length > 1){
         firstButton.setVisible(true)
         firstButton.setText(buttons[0].text)
-        firstButton.onClick(buttons[0].onClick, controller)
+        firstButton.onClick(buttons[0].onClick)
         firstButton.setClickable(buttons[0].isClickable ?? true)
         buttonsMapped.set(buttons[0].text, firstButton)
     }
     if(buttons.length >= 2){
         secondButton.setVisible(true)
         secondButton.setText(buttons[1].text)
-        secondButton.onClick(buttons[1].onClick, controller)
+        secondButton.onClick(buttons[1].onClick)
         secondButton.setClickable(buttons[1].isClickable ?? true)
         buttonsMapped.set(buttons[1].text, secondButton)
     }
     if(buttons.length >= 3){
         thirdButton.setVisible(true)
         thirdButton.setText(buttons[2].text)
-        thirdButton.onClick(buttons[2].onClick, controller)
+        thirdButton.onClick(buttons[2].onClick)
         thirdButton.setClickable(buttons[2].isClickable ?? true)
         buttonsMapped.set(buttons[2].text, thirdButton)
     }
+    const controller = new AbortController()
     document.addEventListener("keyup", event => {
         if(event.key === "Escape" && isCancellable) {
             hideAlert()

@@ -3,16 +3,18 @@ import { playHoverSoundEffect, playSelectSoundEffect } from "./audio.js"
 
 export function button(element){
     let isClickable = true
-
-    element.addEventListener('mouseenter', () => {
-        if(!isClickable) return
-        playHoverSoundEffect()
-        element.classList.add('hovered')
-    })
-
-    element.addEventListener('mouseleave', () => {
-        element.classList.remove('hovered')
-    })
+    handleMouseHover()
+    function handleMouseHover(){
+        element.addEventListener('mouseenter', () => {
+            if(!isClickable) return
+            playHoverSoundEffect()
+            element.classList.add('hovered')
+        })
+    
+        element.addEventListener('mouseleave', () => {
+            element.classList.remove('hovered')
+        })
+    }
 
     return {
         setVisible: (isVisible) => {
@@ -22,14 +24,17 @@ export function button(element){
             updateButtonsMappedText(element.children[1].innerHTML, text)
             element.children[1].innerHTML = text
         },
-        onClick: (callback, controller) => {
+        onClick: (callback) => {
+            const newElement = element.cloneNode(true)
+            element.replaceWith(newElement)
+            element = newElement
+            handleMouseHover()
             element.addEventListener('click', () => {
                 if(!isClickable) return
                 hideAlert()
                 callback()
-                controller.abort()
                 playSelectSoundEffect()
-            }, { signal: controller.signal})
+            })
         },
         setClickable: (clickable) => {
             isClickable = clickable
