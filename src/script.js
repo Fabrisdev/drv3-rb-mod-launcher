@@ -8,33 +8,26 @@ const installHitbox = document.getElementById('install_hitbox')
 const optionsHitbox = document.getElementById('options_hitbox')
 const exitHitbox = document.getElementById('exit_hitbox')
 const installationStartedText = document.getElementById('installation_started_text')
-let selected = "install"
 
-installHitbox.addEventListener('mouseover', () => {
+installHitbox.addEventListener('mouseenter', () => {
     exitSelectedImage.style.visibility = 'hidden'
     optionsSelectedImage.style.visibility = 'hidden'
     installSelectedImage.style.visibility = 'visible'
-    if(selected === "install") return
     playHoverSoundEffect()
-    selected = "install"
 })
 
-optionsHitbox.addEventListener('mouseover', () => {
+optionsHitbox.addEventListener('mouseenter', () => {
     exitSelectedImage.style.visibility = 'hidden'
     installSelectedImage.style.visibility = 'hidden'
     optionsSelectedImage.style.visibility = 'visible'
-    if(selected === "options") return
     playHoverSoundEffect()
-    selected = "options"
 })
 
-exitHitbox.addEventListener('mouseover', () => {
+exitHitbox.addEventListener('mouseenter', () => {
     installSelectedImage.style.visibility = 'hidden'
     optionsSelectedImage.style.visibility = 'hidden'
     exitSelectedImage.style.visibility = 'visible'
-    if(selected === "exit") return
     playHoverSoundEffect()
-    selected = "exit"
 })
 
 async function checkForOldModVersionAndInstall(danganronpaFilePath){
