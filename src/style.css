@@ -112,7 +112,7 @@ video{
 #installation_started_text{
     font-family: sans-serif;
     font-size: 33px;
-    color: #000;
+    color: #fff;
     position: fixed;
     z-index: 1000;
     top: 325;
