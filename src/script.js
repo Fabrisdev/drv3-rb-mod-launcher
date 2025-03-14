@@ -1,5 +1,5 @@
 import { getCurrentAlert, showAlert } from "./js/alert.js"
-import { playSelectSoundEffect, playHoverSoundEffect, playCancelSoundEffect } from "./js/audio.js"
+import { playSelectSoundEffect, playHoverSoundEffect } from "./js/audio.js"
 
 const installSelectedImage = document.getElementById('install_selected_image')
 const optionsSelectedImage = document.getElementById('options_selected_image')
