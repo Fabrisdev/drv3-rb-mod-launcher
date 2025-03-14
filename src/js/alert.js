@@ -49,7 +49,7 @@ export function showAlert({ text, buttons, isCancellable = false }){
             controller.abort()
         }
     }, { signal: controller.signal })
-    return buttonsMapped
+    return { buttons: buttonsMapped }
 }
 
 export function hideAlert(){
