@@ -1,3 +1,4 @@
+import { getCurrentAlert, showAlert } from "./js/alert.js"
 import { playSelectSoundEffect, playHoverSoundEffect, playCancelSoundEffect } from "./js/audio.js"
 
 const installSelectedImage = document.getElementById('install_selected_image')
@@ -38,51 +39,75 @@ exitHitbox.addEventListener('mouseover', () => {
 
 installHitbox.addEventListener('click', async () => {
     playSelectSoundEffect()
-    
-    /*const hasDanganronpaInstalled = await pywebview.api.check_has_danganronpa_installed()
-    let danganronpaFilePath = "STEAM_PATH"
+    const hasDanganronpaInstalled = await pywebview.api.check_has_danganronpa_installed()
+    //let danganronpaFilePath = "STEAM_PATH"
     if(!hasDanganronpaInstalled) {
+        /*
         const answerToNoDanganronpaInstalled = await showNoDanganronpaInstalledAlert()
         if(answerToNoDanganronpaInstalled === "yes") {
             danganronpaFilePath = await pywebview.api.ask_for_danganronpa_file_path()
             if(danganronpaFilePath === "") return
         }
         if(answerToNoDanganronpaInstalled === "no") return
+        const hasOldModInstallation = await pywebview.api.check_has_old_mod_version_installed()
+        if(hasOldModInstallation){
+            const answerToOldModInstallation = await showAlreadyExistingInstallationAlert()
+            if(answerToOldModInstallation === "no") return
+        }
+        showInstallationStartedAlert()
+        pywebview.api.install(danganronpaFilePath)
+        */
+        showAlert({
+            text: "No previous installation of Danganronpa V3: Killing Harmony was found. Proceeding will ask you to specify where it is currently installed. Is that OK?",
+            buttons: [
+                {
+                    text: "Yes",
+                    onClick: async () => {
+                        const danganronpaFilePath = await pywebview.api.ask_for_danganronpa_file_path() 
+                        if(danganronpaFilePath === "") return
+                        const hasOldModInstallation = await pywebview.api.check_has_old_mod_version_installed()
+                        if(hasOldModInstallation){
+                            showAlert({
+                                text: "An already existing installation of the mod was found. Proceeding will overwrite it. Are you sure?",
+                                buttons: [
+                                    {
+                                        text: "Yes",
+                                        onClick: () => {
+                                            pywebview.api.install(danganronpaFilePath)
+                                        }
+                                    },
+                                    {
+                                        text: "No",
+                                        onClick: () => {}
+                                    }
+                                ]
+                            })
+                        }
+                    }
+                },
+                {
+                    text: "No",
+                    onClick: () => {}
+                }
+            ]
+        })
+        return
     }
-    const hasOldModInstallation = await pywebview.api.check_has_old_mod_version_installed()
-    if(hasOldModInstallation){
-        const answerToOldModInstallation = await showAlreadyExistingInstallationAlert()
-        if(answerToOldModInstallation === "no") return
-    }
-    showInstallationStartedAlert()
-    pywebview.api.install(danganronpaFilePath)*/
+    //lo tiene en STEAM_PATH
 })
 
 function showInstallationStatus(status){
     if(status === "INSTALL FINISHED"){
-        const installationStartedImage = document.getElementById('installation_started')
-        const installationFinishedImage = document.getElementById('installation_finished')
-        const okHitbox = document.getElementById('ok_hitbox')
-        installationStartedImage.style.visibility = 'hidden'
-        installationFinishedImage.style.visibility = 'visible'
-        installationStartedImage.classList.remove('show_alert')
-        okHitbox.style.visibility = 'visible'
-        okHitbox.addEventListener('mouseover', () => {
-            playHoverSoundEffect()
-        })
-        okHitbox.addEventListener('click', () => {
-            playSelectSoundEffect()
-            okHitbox.style.visibility = 'hidden'
-            installationFinishedImage.style.visibility = 'hidden'
-            installHitbox.style.visibility = 'visible'
-            optionsHitbox.style.visibility = 'visible'
-            exitHitbox.style.visibility = 'visible'
-            installationStartedText.innerHTML = ""
-        })
+        const { buttons } = getCurrentAlert()
+        const button = buttons.get("...")
+        button.setText("OK")
+        button.setClickable(true)
         return
     }
     installationStartedText.innerHTML = status
 }
+
+window.showInstallationStatus = showInstallationStatus
 
 function skipHitboxMouseOver() {
     const integrityCheckHoverSkipImage = document.getElementById('integrity_check_hover_skip')
@@ -105,25 +130,39 @@ function skipHitboxClick() {
 }
 
 function showStartedCheckingGameIntegrityAlert(){
-    const integrityCheckImage = document.getElementById('integrity_check_skip')
-    integrityCheckImage.style.visibility = 'visible'
-    integrityCheckImage.classList.add('show_alert')
-    const skipHitbox = document.getElementById('ok_hitbox')
-    skipHitbox.style.visibility = 'visible'
-    skipHitbox.addEventListener('mouseover', skipHitboxMouseOver)
-    skipHitbox.addEventListener('click', skipHitboxClick)
+    showAlert({
+        text: "Starting game integrity check...",
+        buttons: [
+            {
+                text: "SKIP",
+                onClick: () => {
+                    pywebview.api.skip_game_integrity_check()
+                    showAlert({
+                        text: "Starting download of the mod...",
+                        buttons: [
+                            {
+                                text: "...",
+                                onClick: () => {},
+                                isClickable: false
+                            }
+                        ]
+                    })
+                }
+            }
+        ]
+    })
 }
 
+window.showStartedCheckingGameIntegrityAlert = showStartedCheckingGameIntegrityAlert
+
 function stopShowingCheckingGameIntegrityAlert(){
-    const integrityCheckImage = document.getElementById('integrity_check_skip')
-    const integrityCheckHoverSkipImage = document.getElementById('integrity_check_hover_skip')
-    integrityCheckImage.style.visibility = 'hidden'
-    integrityCheckHoverSkipImage.style.visibility = 'hidden'
-    integrityCheckImage.classList.remove('show_alert')
-    const skipHitbox = document.getElementById('ok_hitbox')
-    skipHitbox.removeEventListener('mouseover', skipHitboxMouseOver)
-    skipHitbox.removeEventListener('click', skipHitboxClick)
+    const { buttons } = getCurrentAlert()
+    const button = buttons.get("SKIP")
+    button.setClickable(false)
+    button.setText("...")
 }
+
+window.stopShowingCheckingGameIntegrityAlert = stopShowingCheckingGameIntegrityAlert
 
 let shouldContinueUpdatingIntegrityStatus = true
 
@@ -132,6 +171,8 @@ function showIntegrityCheckStatus(status){
     if (shouldContinueUpdatingIntegrityStatus === false) return installationStartedText.innerHTML = "Integrity check has been skipped. Stopping integrity check..."
     installationStartedText.innerHTML = status
 }
+
+window.showIntegrityCheckStatus = showIntegrityCheckStatus
 
 exitHitbox.addEventListener('click', () => {
     pywebview.api.exit()
