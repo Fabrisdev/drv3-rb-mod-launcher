@@ -82,6 +82,7 @@ function showInstallationStatus(status){
         const { buttons } = getCurrentAlert()
         const button = buttons.get("...")
         button.setText("OK")
+        button.onClick(() => {})
         button.setClickable(true)
         return
     }
