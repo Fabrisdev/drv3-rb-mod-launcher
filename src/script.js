@@ -164,11 +164,7 @@ function stopShowingCheckingGameIntegrityAlert(){
 
 window.stopShowingCheckingGameIntegrityAlert = stopShowingCheckingGameIntegrityAlert
 
-let shouldContinueUpdatingIntegrityStatus = true
-
 function showIntegrityCheckStatus(status){
-    if (status === "STOP") shouldContinueUpdatingIntegrityStatus = false
-    if (shouldContinueUpdatingIntegrityStatus === false) return installationStartedText.innerHTML = "Integrity check has been skipped. Stopping integrity check..."
     installationStartedText.innerHTML = status
 }
 
