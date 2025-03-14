@@ -8,12 +8,14 @@ const secondButton = button(document.getElementById('button-container-2'))
 const thirdButton = button(document.getElementById('button-container-3'))
 const buttonIfOnlyOne = button(document.getElementById('button-container-if-only-one'))
 
+let buttonsMapped = new Map()
+
 export function showAlert({ text, buttons, isCancellable = false }){
+    buttonsMapped = new Map()
     alertImage.style.visibility = 'visible'
     alertImage.classList.add('show_alert')
     alertText.innerHTML = text
     const controller = new AbortController()
-    const buttonsMapped = new Map()
     if(buttons.length === 1){
         buttonIfOnlyOne.setVisible(true)
         buttonIfOnlyOne.setText(buttons[0].text)
@@ -60,4 +62,8 @@ export function hideAlert(){
     firstButton.setVisible(false)
     secondButton.setVisible(false)
     thirdButton.setVisible(false)
+}
+
+export function getCurrentAlert(){
+    return { buttons: buttonsMapped }
 }
