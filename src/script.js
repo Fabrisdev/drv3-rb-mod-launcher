@@ -37,6 +37,27 @@ exitHitbox.addEventListener('mouseover', () => {
     selected = "exit"
 })
 
+async function checkForOldModVersionAndInstall(danganronpaFilePath){
+    const hasOldModInstallation = await pywebview.api.check_has_old_mod_version_installed()
+    if(hasOldModInstallation){
+        showAlert({
+            text: "An already existing installation of the mod was found. Proceeding will overwrite it. Are you sure?",
+            buttons: [
+                {
+                    text: "Yes",
+                    onClick: () => {
+                        pywebview.api.install(danganronpaFilePath)
+                    }
+                },
+                {
+                    text: "No",
+                    onClick: () => {}
+                }
+            ]
+        })
+    }
+}
+
 installHitbox.addEventListener('click', async () => {
     playSelectSoundEffect()
     const hasDanganronpaInstalled = await pywebview.api.check_has_danganronpa_installed()
@@ -49,24 +70,7 @@ installHitbox.addEventListener('click', async () => {
                     onClick: async () => {
                         const danganronpaFilePath = await pywebview.api.ask_for_danganronpa_file_path() 
                         if(danganronpaFilePath === "") return
-                        const hasOldModInstallation = await pywebview.api.check_has_old_mod_version_installed()
-                        if(hasOldModInstallation){
-                            showAlert({
-                                text: "An already existing installation of the mod was found. Proceeding will overwrite it. Are you sure?",
-                                buttons: [
-                                    {
-                                        text: "Yes",
-                                        onClick: () => {
-                                            pywebview.api.install(danganronpaFilePath)
-                                        }
-                                    },
-                                    {
-                                        text: "No",
-                                        onClick: () => {}
-                                    }
-                                ]
-                            })
-                        }
+                        checkForOldModVersionAndInstall(danganronpaFilePath)
                     }
                 },
                 {
@@ -77,24 +81,7 @@ installHitbox.addEventListener('click', async () => {
         })
         return
     }
-    const hasOldModInstallation = await pywebview.api.check_has_old_mod_version_installed()
-    if(hasOldModInstallation){
-        showAlert({
-            text: "An already existing installation of the mod was found. Proceeding will overwrite it. Are you sure?",
-            buttons: [
-                {
-                    text: "Yes",
-                    onClick: () => {
-                        pywebview.api.install("STEAM_PATH")
-                    }
-                },
-                {
-                    text: "No",
-                    onClick: () => {}
-                }
-            ]
-        })
-    }
+    checkForOldModVersionAndInstall(danganronpaFilePath)
 })
 
 function showInstallationStatus(status){
