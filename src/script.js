@@ -151,6 +151,7 @@ optionsHitbox.addEventListener('click', async () => {
                     pywebview.api.change_drv3_path()
                 }
             }
-        ]
+        ],
+        isCancellable: true
     })
 })
