@@ -93,7 +93,24 @@ installHitbox.addEventListener('click', async () => {
         })
         return
     }
-    //lo tiene en STEAM_PATH
+    const hasOldModInstallation = await pywebview.api.check_has_old_mod_version_installed()
+    if(hasOldModInstallation){
+        showAlert({
+            text: "An already existing installation of the mod was found. Proceeding will overwrite it. Are you sure?",
+            buttons: [
+                {
+                    text: "Yes",
+                    onClick: () => {
+                        pywebview.api.install("STEAM_PATH")
+                    }
+                },
+                {
+                    text: "No",
+                    onClick: () => {}
+                }
+            ]
+        })
+    }
 })
 
 function showInstallationStatus(status){
