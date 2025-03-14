@@ -40,23 +40,7 @@ exitHitbox.addEventListener('mouseover', () => {
 installHitbox.addEventListener('click', async () => {
     playSelectSoundEffect()
     const hasDanganronpaInstalled = await pywebview.api.check_has_danganronpa_installed()
-    //let danganronpaFilePath = "STEAM_PATH"
     if(!hasDanganronpaInstalled) {
-        /*
-        const answerToNoDanganronpaInstalled = await showNoDanganronpaInstalledAlert()
-        if(answerToNoDanganronpaInstalled === "yes") {
-            danganronpaFilePath = await pywebview.api.ask_for_danganronpa_file_path()
-            if(danganronpaFilePath === "") return
-        }
-        if(answerToNoDanganronpaInstalled === "no") return
-        const hasOldModInstallation = await pywebview.api.check_has_old_mod_version_installed()
-        if(hasOldModInstallation){
-            const answerToOldModInstallation = await showAlreadyExistingInstallationAlert()
-            if(answerToOldModInstallation === "no") return
-        }
-        showInstallationStartedAlert()
-        pywebview.api.install(danganronpaFilePath)
-        */
         showAlert({
             text: "No previous installation of Danganronpa V3: Killing Harmony was found. Proceeding will ask you to specify where it is currently installed. Is that OK?",
             buttons: [
