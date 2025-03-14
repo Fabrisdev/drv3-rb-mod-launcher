@@ -24,8 +24,8 @@ export function button(element){
         onClick: (callback, controller) => {
             element.addEventListener('click', () => {
                 if(!isClickable) return
-                callback()
                 hideAlert()
+                callback()
                 controller.abort()
                 playSelectSoundEffect()
             }, { signal: controller.signal})
