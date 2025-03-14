@@ -67,3 +67,11 @@ export function hideAlert(){
 export function getCurrentAlert(){
     return { buttons: buttonsMapped }
 }
+
+export function updateButtonsMappedText(oldText, newText){
+    const button = buttonsMapped.get(oldText)
+    buttonsMapped.set(newText, button)
+    buttonsMapped.delete(oldText)
+}
+
+window.getCurrentAlert = getCurrentAlert

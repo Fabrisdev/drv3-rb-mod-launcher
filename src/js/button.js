@@ -1,4 +1,4 @@
-import { hideAlert } from "./alert.js"
+import { hideAlert, updateButtonsMappedText } from "./alert.js"
 import { playHoverSoundEffect, playSelectSoundEffect } from "./audio.js"
 
 export function button(element){
@@ -19,6 +19,7 @@ export function button(element){
             element.style.visibility = isVisible ? 'visible' : 'hidden'
         },
         setText: (text) => {
+            updateButtonsMappedText(element.children[1].innerHTML, text)
             element.children[1].innerHTML = text
         },
         onClick: (callback, controller) => {
