@@ -74,7 +74,7 @@ installHitbox.addEventListener('click', async () => {
         })
         return
     }
-    checkForOldModVersionAndInstall(danganronpaFilePath)
+    checkForOldModVersionAndInstall("STEAM_PATH")
 })
 
 function showInstallationStatus(status){
