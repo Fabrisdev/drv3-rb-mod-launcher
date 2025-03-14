@@ -7,11 +7,17 @@ const firstButton = button(document.getElementById('button-container-1'))
 const secondButton = button(document.getElementById('button-container-2'))
 const thirdButton = button(document.getElementById('button-container-3'))
 const buttonIfOnlyOne = button(document.getElementById('button-container-if-only-one'))
+const installHitbox = document.getElementById('install_hitbox')
+const optionsHitbox = document.getElementById('options_hitbox')
+const exitHitbox = document.getElementById('exit_hitbox')
 
 let buttonsMapped = new Map()
 
 export function showAlert({ text, buttons, isCancellable = false }){
     buttonsMapped = new Map()
+    installHitbox.style.visibility = 'hidden'
+    optionsHitbox.style.visibility = 'hidden'
+    exitHitbox.style.visibility = 'hidden'
     alertImage.style.visibility = 'visible'
     alertImage.classList.add('show_alert')
     alertText.innerHTML = text
@@ -62,6 +68,9 @@ export function hideAlert(){
     firstButton.setVisible(false)
     secondButton.setVisible(false)
     thirdButton.setVisible(false)
+    installHitbox.style.visibility = 'visible'
+    optionsHitbox.style.visibility = 'visible'
+    exitHitbox.style.visibility = 'visible'
 }
 
 export function getCurrentAlert(){
