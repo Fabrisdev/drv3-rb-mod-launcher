@@ -8,7 +8,7 @@ const secondButton = button(document.getElementById('button-container-2'))
 const thirdButton = button(document.getElementById('button-container-3'))
 const buttonIfOnlyOne = button(document.getElementById('button-container-if-only-one'))
 
-export function showAlert({ text, buttons, isCancellable }){
+export function showAlert({ text, buttons, isCancellable = false }){
     alertImage.style.visibility = 'visible'
     alertImage.classList.add('show_alert')
     alertText.innerHTML = text
