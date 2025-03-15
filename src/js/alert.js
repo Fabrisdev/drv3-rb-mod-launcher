@@ -49,14 +49,15 @@ export function showAlert({ text, buttons, isCancellable = false }){
         thirdButton.setClickable(buttons[2].isClickable ?? true)
         buttonsMapped.set(buttons[2].text, thirdButton)
     }
-    const controller = new AbortController()
-    document.addEventListener("keyup", event => {
+    function handleEscapePressed(event){
         if(event.key === "Escape" && isCancellable) {
             hideAlert()
             playCancelSoundEffect()
             controller.abort()
         }
-    }, { signal: controller.signal })
+    }
+    document.removeEventListener("keyup", handleEscapePressed)
+    document.addEventListener("keyup", handleEscapePressed)
     return { buttons: buttonsMapped }
 }
 
