@@ -82,7 +82,7 @@ installHitbox.addEventListener('click', async () => {
 function showInstallationStatus(status){
     if(status === "INSTALL FINISHED"){
         const { buttons } = getCurrentAlert()
-        const button = buttons.get("...")
+        const button = buttons.get("...") ?? buttons.get("SKIP")
         button.setText("OK")
         button.onClick(() => {})
         button.setClickable(true)
