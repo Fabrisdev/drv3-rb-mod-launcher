@@ -1,20 +1,27 @@
 <link rel="stylesheet" href="style.css">
-<script src="script.js" defer></script>
+<script src="script.js" defer type="module"></script>
 <video src="menu_loop.mp4" autoplay loop muted></video>
 <img src="img/exit_selected.png" alt="" id="exit_selected_image">
 <img src="img/options_selected.png" alt="" id="options_selected_image">
 <img src="img/install_selected.png" alt="" id="install_selected_image">
-<img src="img/warning_existing_installation_found_no.png" alt="" id="warning_existing_installation_found_no" class="alert">
-<img src="img/warning_existing_installation_found_yes.png" alt="" id="warning_existing_installation_found_yes" class="alert">
-<img src="img/warning_no_danganronpa_installation_found_no.png" alt="" id="warning_no_danganronpa_installation_found_no" class="alert">
-<img src="img/warning_no_danganronpa_installation_found_yes.png" alt="" id="warning_no_danganronpa_installation_found_yes" class="alert">
-<img src="img/installation_started.png" alt="" id="installation_started" class="alert">
-<img src="img/installation_finished.png" alt="" id="installation_finished" class="alert">
-<img src="img/options_drv3.png" alt="" id="options_drv3" class="alert">
-<img src="img/options_mod.png" alt="" id="options_mod" class="alert">
-<img src="img/integrity_check_hover_skip.png" alt="" id="integrity_check_hover_skip" class="alert">
-<img src="img/integrity_check_skip.png" alt="" id="integrity_check_skip" class="alert">
+<img src="img/alert.png" alt="" class="alert" id="alert-image">
 <p id="installation_started_text"></p>
+<div id="button-container-1" class="button-container">
+    <img src="img/button.png" alt="">
+    <p></p>
+</div>
+<div id="button-container-2" class="button-container">
+    <img src="img/button.png" alt="">
+    <p></p>
+</div>
+<div id="button-container-3" class="button-container">
+    <img src="img/button.png" alt="">
+    <p></p>
+</div>
+<div id="button-container-if-only-one" class="button-container">
+    <img src="img/button.png" alt="">
+    <p></p>
+</div>
 <div id="install_hitbox"></div>
 <div id="options_hitbox"></div>
 <div id="exit_hitbox"></div>
