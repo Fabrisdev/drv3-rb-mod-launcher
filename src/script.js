@@ -48,7 +48,9 @@ async function checkForOldModVersionAndInstall(danganronpaFilePath){
                 }
             ]
         })
+        return
     }
+    pywebview.api.install(danganronpaFilePath)
 }
 
 installHitbox.addEventListener('click', async () => {
