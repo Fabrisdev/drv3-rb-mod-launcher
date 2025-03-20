@@ -53,7 +53,6 @@ export function showAlert({ text, buttons, isCancellable = false }){
         if(event.key === "Escape" && isCancellable) {
             hideAlert()
             playCancelSoundEffect()
-            controller.abort()
         }
     }
     document.removeEventListener("keyup", handleEscapePressed)
