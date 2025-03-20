@@ -167,3 +167,16 @@ video{
 .hovered p{
     color: #000
 }
+
+.version-info{
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    color: #fff;
+    font-size: 20px;
+    font-family: sans-serif;
+}
+
+a{
+    color: #fff;
+}
