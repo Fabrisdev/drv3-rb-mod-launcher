@@ -10,8 +10,10 @@ It's simple! Just head to the `Releases` section of this repository and click on
 
 However please note, that if you're using `Microsoft Edge` while downloading you may get a popup like this one
 ![Popup that may appear on Microsoft Edge](https://i.imgur.com/x8V2emS.png)
+
 This is simply because it has not yet been downloaded enough times for `Edge` to trust it. Simply click on the three dots and then `Keep`.
 ![Keep anyway](https://i.imgur.com/77aijA7.png)
+
 Or if you're feeling generous you can even click on `Report this file as safe` to help `Edge` flag it as safe.
 # Compiling yourself
 Do you not trust the prebuilt executable or would you like to help by contributing new features? Here's the steps to follow in order to download the source code and compile it yourself!
@@ -29,12 +31,14 @@ cd drv3-rb-mod-launcher
 ```
 Once you open it you should see something like this:
 ![Autopytoexe opened](https://i.imgur.com/wVM6ISd.png)
+
 4. Open up the settings section
 ![Settings section opened](https://i.imgur.com/ekZ1eTx.png)
 5. Click on  `Import Config from JSON File`. A file picker will appear. You must select the file named `auto-py-to-exe-config.json`
 ![File selected](https://i.imgur.com/xj3K2um.png)
 6. Once you've done that, it should now look like this:
 ![How it looks in the end](https://i.imgur.com/EcUpHpJ.png)
+
 It's now ready for compiling. Just click on `CONVERT .PY TO .EXE` and wait for it to finish. The resulting .exe will be found in a folder named `output` in the same directory.
 # Showcase
 ![Options section](https://i.imgur.com/3znHvgR.png)
