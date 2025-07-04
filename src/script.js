@@ -1,5 +1,6 @@
 import { getCurrentAlert, showAlert } from "./js/alert.js"
 import { playSelectSoundEffect, playHoverSoundEffect } from "./js/audio.js"
+import { setLanguage } from "./js/language.js"
 
 const installSelectedImage = document.getElementById('install_selected_image')
 const optionsSelectedImage = document.getElementById('options_selected_image')
@@ -236,4 +237,44 @@ optionsHitbox.addEventListener('click', async () => {
         ],
         isCancellable: true
     })
+})
+
+showAlert({
+    text: {
+        en: "Before starting, please choose your preferred language. The game will also be installed in that language",
+        es: "Before starting, please choose your preferred language. The game will also be installed in that language",
+        fr: "Before starting, please choose your preferred language. The game will also be installed in that language"
+    },
+    buttons: [
+        {
+            text: {
+                en: "English",
+                es: "English",
+                fr: "English"
+            },
+            onClick: () => {
+                setLanguage('en')
+            }
+        },
+                {
+            text: {
+                en: "Spanish",
+                es: "Spanish",
+                fr: "Spanish"
+            },
+            onClick: () => {
+                setLanguage('es')
+            }
+        },
+                {
+            text: {
+                en: "French",
+                es: "French",
+                fr: "French"
+            },
+            onClick: () => {
+                setLanguage('fr')
+            }
+        }
+    ]
 })
