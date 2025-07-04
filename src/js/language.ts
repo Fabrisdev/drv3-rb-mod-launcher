@@ -1,6 +1,8 @@
-let language = 'en'
+let language: SupportedLanguages = 'en'
 
-export function setLanguage(newLanguage: string) {
+export type SupportedLanguages = 'en' | 'es' | 'fr'
+
+export function setLanguage(newLanguage: SupportedLanguages) {
     const selectedLanguageEvent = new CustomEvent('language-selected', {
         detail: {
             language: newLanguage

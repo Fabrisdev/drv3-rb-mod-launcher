@@ -1,7 +1,9 @@
+import type { SupportedLanguages } from "./language"
+
 export {}
 
 declare global {
     interface Window {
-        setLanguage: (newLanguage: string) => void
+        setLanguage: (newLanguage: SupportedLanguages) => void
     }
 }
