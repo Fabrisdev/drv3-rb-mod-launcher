@@ -1,10 +1,11 @@
-let language = localStorage.getItem('language')
+let language = 'en'
 
 export function setLanguage(newLanguage) {
     language = newLanguage
-    localStorage.setItem('language', language)
 }
 
 export function getLanguage() {
     return language
 }
+
+window.setLanguage = setLanguage
