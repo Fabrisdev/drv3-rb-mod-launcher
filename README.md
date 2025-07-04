@@ -17,29 +17,36 @@ This is simply because it has not yet been downloaded enough times for `Edge` to
 Or if you're feeling generous you can even click on `Report this file as safe` to help `Edge` flag it as safe.
 # Compiling yourself
 Do you not trust the prebuilt executable or would you like to help by contributing new features? Here's the steps to follow in order to download the source code and compile it yourself!
-1. Get the source code
+1. Install Microsoft C++ Build Tools. You can get them [here](https://visualstudio.microsoft.com/visual-cpp-build-tools/) 
+2. Install Python. You can get it [here](https://www.python.org/downloads/)
+3. Get the source code
 ```sh
 git clone https://github.com/Fabrisdev/drv3-rb-mod-launcher
 ```
-2. Head into the just created directory
+4. Head into the just created directory
 ```sh
 cd drv3-rb-mod-launcher
 ```
-3. Open `autopytoexe`. This is a tool for compiling `Python` code into an exe.
+5. Create virtual environment and install dependencies
+```sh
+python -m venv .venv
+.venv/Scripts/pip install -r requirements.txt
+```
+6. Open `autopytoexe`. This is a tool for compiling `Python` code into an exe.
 ```sh
 .venv/Scripts/autopytoexe.exe
 ```
 Once you open it you should see something like this:
 ![Autopytoexe opened](https://i.imgur.com/wVM6ISd.png)
 
-4. Open up the settings section
+7. Open up the settings section
 ![Settings section opened](https://i.imgur.com/ekZ1eTx.png)
-5. Click on  `Import Config from JSON File`. A file picker will appear. You must select the file named `auto-py-to-exe-config.json`
+8. Click on  `Import Config from JSON File`. A file picker will appear. You must select the file named `auto-py-to-exe-config.json`
 ![File selected](https://i.imgur.com/xj3K2um.png)
-6. Once you've done that, it should now look like this:
+9. Once you've done that, it should now look like this:
 ![How it looks in the end](https://i.imgur.com/EcUpHpJ.png)
 
-It's now ready for compiling. Just click on `CONVERT .PY TO .EXE` and wait for it to finish. The resulting .exe will be found in a folder named `output` in the same directory.
+It's finally ready for compiling. Just click on `CONVERT .PY TO .EXE` and wait for it to finish. The resulting .exe will be found in a folder named `output` in the same directory.
 # Showcase
 ![Options section](https://i.imgur.com/3znHvgR.png)
 ![Alert that pops up when an already existing installation was found](https://i.imgur.com/sEl8SuL.png)
