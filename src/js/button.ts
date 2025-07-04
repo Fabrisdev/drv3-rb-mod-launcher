@@ -16,7 +16,7 @@ export type ButtonWrapper = {
     setClickable: (clickable: any) => void;
 }
 
-export function button(element){
+export function button(element: HTMLElement){
     let isClickable = true
     handleMouseHover()
     function handleMouseHover(){
@@ -32,16 +32,16 @@ export function button(element){
     }
 
     return {
-        setVisible: (isVisible) => {
+        setVisible: (isVisible: boolean) => {
             element.style.visibility = isVisible ? 'visible' : 'hidden'
         },
-        setText: (text) => {
+        setText: (text: TranslatedText) => {
             const selectedLanguage = getLanguage()
             updateButtonsMappedText(element.children[1].innerHTML, text[selectedLanguage])
             element.children[1].innerHTML = text[selectedLanguage]
         },
-        onClick: (callback) => {
-            const newElement = element.cloneNode(true)
+        onClick: (callback: () => void) => {
+            const newElement = element.cloneNode(true) as HTMLElement
             element.replaceWith(newElement)
             element = newElement
             handleMouseHover()
@@ -52,7 +52,7 @@ export function button(element){
                 playSelectSoundEffect()
             })
         },
-        setClickable: (clickable) => {
+        setClickable: (clickable: boolean) => {
             isClickable = clickable
         }
     }
