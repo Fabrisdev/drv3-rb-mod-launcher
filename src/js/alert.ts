@@ -5,15 +5,15 @@ import type { Button, ButtonWrapper } from "./button.ts"
 
 const alertImage = document.getElementById("alert-image")!
 const alertText = document.getElementById('installation_started_text')!
-const firstButton = button(document.getElementById('button-container-1'))
-const secondButton = button(document.getElementById('button-container-2'))
-const thirdButton = button(document.getElementById('button-container-3'))
-const buttonIfOnlyOne = button(document.getElementById('button-container-if-only-one'))
+const firstButton = button(document.getElementById('button-container-1')!)
+const secondButton = button(document.getElementById('button-container-2')!)
+const thirdButton = button(document.getElementById('button-container-3')!)
+const buttonIfOnlyOne = button(document.getElementById('button-container-if-only-one')!)
 const installHitbox = document.getElementById('install_hitbox')!
 const optionsHitbox = document.getElementById('options_hitbox')!
 const exitHitbox = document.getElementById('exit_hitbox')!
 
-let buttonsMapped = new Map<TranslatedText, ButtonWrapper>()
+let buttonsMapped = new Map<string, ButtonWrapper>()
 
 type Alert = {
     text: TranslatedText,
@@ -35,28 +35,28 @@ export function showAlert({ text, buttons, isCancellable = false }: Alert){
         buttonIfOnlyOne.setText(buttons[0].text)
         buttonIfOnlyOne.onClick(buttons[0].onClick)
         buttonIfOnlyOne.setClickable(buttons[0].isClickable ?? true)
-        buttonsMapped.set(buttons[0].text, buttonIfOnlyOne)
+        buttonsMapped.set(buttons[0].text[selectedLanguage], buttonIfOnlyOne)
     }
     if(buttons.length > 1){
         firstButton.setVisible(true)
         firstButton.setText(buttons[0].text)
         firstButton.onClick(buttons[0].onClick)
         firstButton.setClickable(buttons[0].isClickable ?? true)
-        buttonsMapped.set(buttons[0].text, firstButton)
+        buttonsMapped.set(buttons[0].text[selectedLanguage], firstButton)
     }
     if(buttons.length >= 2){
         secondButton.setVisible(true)
         secondButton.setText(buttons[1].text)
         secondButton.onClick(buttons[1].onClick)
         secondButton.setClickable(buttons[1].isClickable ?? true)
-        buttonsMapped.set(buttons[1].text, secondButton)
+        buttonsMapped.set(buttons[1].text[selectedLanguage], secondButton)
     }
     if(buttons.length >= 3){
         thirdButton.setVisible(true)
         thirdButton.setText(buttons[2].text)
         thirdButton.onClick(buttons[2].onClick)
         thirdButton.setClickable(buttons[2].isClickable ?? true)
-        buttonsMapped.set(buttons[2].text, thirdButton)
+        buttonsMapped.set(buttons[2].text[selectedLanguage], thirdButton)
     }
     function handleEscapePressed(event: KeyboardEvent){
         if(event.key === "Escape" && isCancellable) {
@@ -86,7 +86,7 @@ export function getCurrentAlert(){
     return { buttons: buttonsMapped }
 }
 
-export function updateButtonsMappedText(oldText: TranslatedText, newText: TranslatedText){
+export function updateButtonsMappedText(oldText: string, newText: string){
     const button = buttonsMapped.get(oldText)
     if(button === undefined) return
     buttonsMapped.set(newText, button)
