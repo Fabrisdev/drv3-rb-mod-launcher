@@ -1,6 +1,6 @@
 let language = 'en'
 
-export function setLanguage(newLanguage) {
+export function setLanguage(newLanguage: string) {
     const selectedLanguageEvent = new CustomEvent('language-selected', {
         detail: {
             language: newLanguage
