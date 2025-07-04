@@ -1,6 +1,6 @@
-import { playCancelSoundEffect } from "./audio.js"
-import { button } from "./button.js"
-import { getLanguage } from "./language.js"
+import { playCancelSoundEffect } from "./audio.ts"
+import { button } from "./button.ts"
+import { getLanguage } from "./language.ts"
 
 const alertImage = document.getElementById("alert-image")
 const alertText = document.getElementById('installation_started_text')

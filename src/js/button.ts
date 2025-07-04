@@ -1,6 +1,6 @@
-import { hideAlert, updateButtonsMappedText } from "./alert.js"
-import { playHoverSoundEffect, playSelectSoundEffect } from "./audio.js"
-import { getLanguage } from "./language.js"
+import { hideAlert, updateButtonsMappedText } from "./alert.ts"
+import { playHoverSoundEffect, playSelectSoundEffect } from "./audio.ts"
+import { getLanguage } from "./language.ts"
 
 export function button(element){
     let isClickable = true
