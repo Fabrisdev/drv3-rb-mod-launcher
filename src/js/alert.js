@@ -21,7 +21,7 @@ export function showAlert({ text, buttons, isCancellable = false }){
     exitHitbox.style.visibility = 'hidden'
     alertImage.style.visibility = 'visible'
     alertImage.classList.add('show_alert')
-    const selectedLanguage = getLanguage() ?? 'en'
+    const selectedLanguage = getLanguage()
     alertText.innerHTML = text[selectedLanguage]
     if(buttons.length === 1){
         buttonIfOnlyOne.setVisible(true)

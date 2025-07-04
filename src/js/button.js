@@ -22,7 +22,7 @@ export function button(element){
             element.style.visibility = isVisible ? 'visible' : 'hidden'
         },
         setText: (text) => {
-            const selectedLanguage = getLanguage() ?? 'en'
+            const selectedLanguage = getLanguage()
             updateButtonsMappedText(element.children[1].innerHTML, text[selectedLanguage])
             element.children[1].innerHTML = text[selectedLanguage]
         },
