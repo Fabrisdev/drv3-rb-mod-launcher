@@ -7,4 +7,7 @@ declare global {
         setLanguage: (newLanguage: SupportedLanguages) => void
         getCurrentAlert: () => { buttons: Map<TranslatedText, ButtonWrapper> }
     }
+    interface WindowEventMap {
+        'language-selected': CustomEvent<{ language: SupportedLanguages }>
+    }
 }
