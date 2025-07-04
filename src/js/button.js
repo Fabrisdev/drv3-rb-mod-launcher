@@ -1,5 +1,6 @@
 import { hideAlert, updateButtonsMappedText } from "./alert.js"
 import { playHoverSoundEffect, playSelectSoundEffect } from "./audio.js"
+import { getLanguage } from "./language.js"
 
 export function button(element){
     let isClickable = true
@@ -21,8 +22,9 @@ export function button(element){
             element.style.visibility = isVisible ? 'visible' : 'hidden'
         },
         setText: (text) => {
-            updateButtonsMappedText(element.children[1].innerHTML, text)
-            element.children[1].innerHTML = text
+            const selectedLanguage = getLanguage() ?? 'en'
+            updateButtonsMappedText(element.children[1].innerHTML, text[selectedLanguage])
+            element.children[1].innerHTML = text[selectedLanguage]
         },
         onClick: (callback) => {
             const newElement = element.cloneNode(true)
