@@ -1,5 +1,6 @@
 import { playCancelSoundEffect } from "./audio.js"
 import { button } from "./button.js"
+import { getLanguage } from "./language.js"
 
 const alertImage = document.getElementById("alert-image")
 const alertText = document.getElementById('installation_started_text')
@@ -20,7 +21,8 @@ export function showAlert({ text, buttons, isCancellable = false }){
     exitHitbox.style.visibility = 'hidden'
     alertImage.style.visibility = 'visible'
     alertImage.classList.add('show_alert')
-    alertText.innerHTML = text
+    const selectedLanguage = getLanguage()
+    alertText.innerHTML = text[selectedLanguage]
     if(buttons.length === 1){
         buttonIfOnlyOne.setVisible(true)
         buttonIfOnlyOne.setText(buttons[0].text)

@@ -1,5 +1,6 @@
 import { getCurrentAlert, showAlert } from "./js/alert.js"
 import { playSelectSoundEffect, playHoverSoundEffect } from "./js/audio.js"
+import { setLanguage } from "./js/language.js"
 
 const installSelectedImage = document.getElementById('install_selected_image')
 const optionsSelectedImage = document.getElementById('options_selected_image')
@@ -34,16 +35,28 @@ async function checkForOldModVersionAndInstall(danganronpaFilePath){
     const hasOldModInstallation = await pywebview.api.check_has_old_mod_version_installed()
     if(hasOldModInstallation){
         showAlert({
-            text: "An already existing installation of the mod was found. Proceeding will overwrite it. Are you sure?",
+            text: {
+                en: "An already existing installation of the mod was found. Proceeding will overwrite it. Are you sure?",
+                es: "Se ha encontrado una instalación previa del mod. Al proceder esta se sobrescribirá. ¿Estás seguro?",
+                fr: "Une installation du mod déjà existante a été trouvé. En poursuivant, celle-ci sera écrasé. Êtes vous sur ?"
+            },
             buttons: [
                 {
-                    text: "Yes",
+                    text: {
+                        en: "Yes",
+                        es: "Sí",
+                        fr: "Oui"
+                    },
                     onClick: () => {
                         pywebview.api.install(danganronpaFilePath)
                     }
                 },
                 {
-                    text: "No",
+                    text: {
+                        en: "No",
+                        es: "No",
+                        fr: "Non"
+                    },
                     onClick: () => {}
                 }
             ]
@@ -57,10 +70,18 @@ installHitbox.addEventListener('click', async () => {
     playSelectSoundEffect()
     if(!navigator.onLine){
         return showAlert({
-            text: "You don't seem to have an internet connection. Please check your network and try again.",
+            text: {
+                en: "You don't seem to have an internet connection. Please check your network and try again",
+                es: "No pareces que tengas conexión a internet. Por favor, revisa tu red e inténtalo de nuevo",
+                fr: "NOT YET DONE"
+            },
             buttons: [
                 {
-                    text: "OK",
+                    text: {
+                        en: "OK",
+                        es: "Vale",
+                        fr: "NOT YET DONE"
+                    },
                     onClick: () => {}
                 }
             ]
@@ -69,10 +90,18 @@ installHitbox.addEventListener('click', async () => {
     const hasDanganronpaInstalled = await pywebview.api.check_has_danganronpa_installed()
     if(!hasDanganronpaInstalled) {
         showAlert({
-            text: "No previous installation of Danganronpa V3: Killing Harmony was found. Proceeding will ask you to specify where it is currently installed. Is that OK?",
+            text: {
+                en: "No previous installation of Danganronpa V3: Killing Harmony was found. Proceeding will ask you to specify where it is currently installed. Is that OK?",
+                es: "No se ha encontrado una instalación previa de Danganronpa V3: Killing Harmony. Al proceder se te pedirá que especifiques donde está actualmente instalado. ¿Está bien?",
+                fr: "Aucune installation de Danganronpa V3: Killing Harmony n'a été trouvée. En poursuivantil vous sera demandé de specifier ou le jeu est actuellement installé. Est ce que c'est bon pour vous ?"
+            },
             buttons: [
                 {
-                    text: "Yes",
+                    text: {
+                        en: "Yes",
+                        es: "Sí",
+                        fr: "Oui"
+                    },
                     onClick: async () => {
                         const danganronpaFilePath = await pywebview.api.ask_for_danganronpa_file_path() 
                         if(danganronpaFilePath === "") return
@@ -80,7 +109,11 @@ installHitbox.addEventListener('click', async () => {
                     }
                 },
                 {
-                    text: "No",
+                    text: {
+                        en: "No",
+                        es: "No",
+                        fr: "Non"
+                    },
                     onClick: () => {}
                 }
             ]
@@ -93,8 +126,12 @@ installHitbox.addEventListener('click', async () => {
 function showInstallationStatus(status){
     if(status === "INSTALL FINISHED"){
         const { buttons } = getCurrentAlert()
-        const button = buttons.get("...") ?? buttons.get("SKIP")
-        button.setText("OK")
+        const button = buttons.get("...") ?? buttons.get("SKIP") ?? buttons.get("SALTAR") ?? buttons.get("PASSER")
+        button.setText({
+            en: "OK",
+            es: "Vale",
+            fr: "NOT YET DONE"
+        })
         button.onClick(() => {})
         button.setClickable(true)
         return
@@ -106,17 +143,33 @@ window.showInstallationStatus = showInstallationStatus
 
 function showStartedCheckingGameIntegrityAlert(){
     showAlert({
-        text: "Starting game integrity check...",
+        text: {
+            en: "Starting game integrity check...",
+            es: "Comenzando chequeo de integridad del juego...",
+            fr: "Démarrage de la vérification de l'intégrité des fichiers du jeu..."
+        },
         buttons: [
             {
-                text: "SKIP",
+                text: {
+                    en: "SKIP",
+                    es: "SALTAR",
+                    fr: "PASSER"
+                },
                 onClick: () => {
                     pywebview.api.skip_game_integrity_check()
                     showAlert({
-                        text: "Starting download of the mod...",
+                        text: {
+                            en: "Starting download of the mod...",
+                            es: "Iniciando descarga del mod...",
+                            fr: "Démarrage du téléchargement du mod..."
+                        },
                         buttons: [
                             {
-                                text: "...",
+                                text: {
+                                    en: "...",
+                                    es: "...",
+                                    fr: "..."
+                                },
                                 onClick: () => {},
                                 isClickable: false
                             }
@@ -132,9 +185,13 @@ window.showStartedCheckingGameIntegrityAlert = showStartedCheckingGameIntegrityA
 
 function stopShowingCheckingGameIntegrityAlert(){
     const { buttons } = getCurrentAlert()
-    const button = buttons.get("SKIP")
+    const button = buttons.get("SKIP") ?? buttons.get("SALTAR") ?? buttons.get("PASSER")
     button.setClickable(false)
-    button.setText("...")
+    button.setText({
+        en: "...",
+        es: "...",
+        fr: "..."
+    })
 }
 
 window.stopShowingCheckingGameIntegrityAlert = stopShowingCheckingGameIntegrityAlert
@@ -151,16 +208,28 @@ exitHitbox.addEventListener('click', () => {
 
 optionsHitbox.addEventListener('click', async () => {
     showAlert({
-        text: "You can either change the mod's installation path or Danganronpa V3: Killing Harmony's current installation path",
+        text: {
+            en: "You can either change the mod's installation path or Danganronpa V3: Killing Harmony's current installation path",
+            es: "Puedes cambiar donde se instalará el mod o donde está actualmente instalado Danganronpa V3: Killing Harmony",
+            fr: "Vous pouvez soit changer le chemin d'installation du mod, soit changer le chemin d'installation actuel de Danganronpa V3: Killing Harmony"
+        },
         buttons: [
             {
-                text: "MOD",
+                text: {
+                    en: "MOD",
+                    es: "MOD",
+                    fr: "MOD"
+                },
                 onClick: () => {
                     pywebview.api.change_mod_path()
                 } 
             },
             {
-                text: "DRV3",
+                text: {
+                    en: "DRV3",
+                    es: "DRV3",
+                    fr: "DRV3"
+                },
                 onClick: () => {
                     pywebview.api.change_drv3_path()
                 }
@@ -168,4 +237,44 @@ optionsHitbox.addEventListener('click', async () => {
         ],
         isCancellable: true
     })
+})
+
+showAlert({
+    text: {
+        en: "Before starting, please choose your preferred language. The game will also be installed in that language",
+        es: "Before starting, please choose your preferred language. The game will also be installed in that language",
+        fr: "Before starting, please choose your preferred language. The game will also be installed in that language"
+    },
+    buttons: [
+        {
+            text: {
+                en: "English",
+                es: "English",
+                fr: "English"
+            },
+            onClick: () => {
+                setLanguage('en')
+            }
+        },
+                {
+            text: {
+                en: "Spanish",
+                es: "Spanish",
+                fr: "Spanish"
+            },
+            onClick: () => {
+                setLanguage('es')
+            }
+        },
+                {
+            text: {
+                en: "French",
+                es: "French",
+                fr: "French"
+            },
+            onClick: () => {
+                setLanguage('fr')
+            }
+        }
+    ]
 })
