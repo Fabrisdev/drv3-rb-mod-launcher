@@ -55,6 +55,17 @@ async function checkForOldModVersionAndInstall(danganronpaFilePath){
 
 installHitbox.addEventListener('click', async () => {
     playSelectSoundEffect()
+    if(!navigator.onLine){
+        return showAlert({
+            text: "You don't seem to have an internet connection. Please check your network and try again.",
+            buttons: [
+                {
+                    text: "OK",
+                    onClick: () => {}
+                }
+            ]
+        })
+    }
     const hasDanganronpaInstalled = await pywebview.api.check_has_danganronpa_installed()
     if(!hasDanganronpaInstalled) {
         showAlert({
