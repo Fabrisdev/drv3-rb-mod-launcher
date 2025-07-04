@@ -5,3 +5,12 @@ const version = lastRelease.name
 const releaseLink = data[0].html_url
 const modVersionText = document.getElementById('mod-version')
 modVersionText.innerHTML = `Mod version: <a target="_blank" href="${releaseLink}">${version}</a>`
+window.addEventListener('language-selected', (event) => {
+    const { language } = event.detail
+    const modVersionTranslation = {
+        en: "Mod version",
+        es: "Versión del mod",
+        fr: "Version du mod"
+    }
+    modVersionText.innerHTML = `${modVersionTranslation[language]}: <a target="_blank" href="${releaseLink}">${version}</a>`
+})
