@@ -1,6 +1,20 @@
 import { hideAlert, updateButtonsMappedText } from "./alert.ts"
 import { playHoverSoundEffect, playSelectSoundEffect } from "./audio.ts"
-import { getLanguage } from "./language.ts"
+import { getLanguage, type TranslatedText } from "./language.ts"
+
+
+export type Button = {
+    text: TranslatedText,
+    onClick: () => void,
+    isClickable?: boolean,
+}
+
+export type ButtonWrapper = {
+    setVisible: (isVisible: any) => void;
+    setText: (text: any) => void;
+    onClick: (callback: any) => void;
+    setClickable: (clickable: any) => void;
+}
 
 export function button(element){
     let isClickable = true

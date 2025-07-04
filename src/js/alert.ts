@@ -1,20 +1,27 @@
 import { playCancelSoundEffect } from "./audio.ts"
 import { button } from "./button.ts"
-import { getLanguage } from "./language.ts"
+import { getLanguage, type TranslatedText } from "./language.ts"
+import type { Button, ButtonWrapper } from "./button.ts"
 
-const alertImage = document.getElementById("alert-image")
-const alertText = document.getElementById('installation_started_text')
+const alertImage = document.getElementById("alert-image")!
+const alertText = document.getElementById('installation_started_text')!
 const firstButton = button(document.getElementById('button-container-1'))
 const secondButton = button(document.getElementById('button-container-2'))
 const thirdButton = button(document.getElementById('button-container-3'))
 const buttonIfOnlyOne = button(document.getElementById('button-container-if-only-one'))
-const installHitbox = document.getElementById('install_hitbox')
-const optionsHitbox = document.getElementById('options_hitbox')
-const exitHitbox = document.getElementById('exit_hitbox')
+const installHitbox = document.getElementById('install_hitbox')!
+const optionsHitbox = document.getElementById('options_hitbox')!
+const exitHitbox = document.getElementById('exit_hitbox')!
 
-let buttonsMapped = new Map()
+let buttonsMapped = new Map<TranslatedText, ButtonWrapper>()
 
-export function showAlert({ text, buttons, isCancellable = false }){
+type Alert = {
+    text: TranslatedText,
+    buttons: Button[],
+    isCancellable?: boolean
+}
+
+export function showAlert({ text, buttons, isCancellable = false }: Alert){
     buttonsMapped = new Map()
     installHitbox.style.visibility = 'hidden'
     optionsHitbox.style.visibility = 'hidden'
@@ -51,7 +58,7 @@ export function showAlert({ text, buttons, isCancellable = false }){
         thirdButton.setClickable(buttons[2].isClickable ?? true)
         buttonsMapped.set(buttons[2].text, thirdButton)
     }
-    function handleEscapePressed(event){
+    function handleEscapePressed(event: KeyboardEvent){
         if(event.key === "Escape" && isCancellable) {
             hideAlert()
             playCancelSoundEffect()
@@ -79,8 +86,9 @@ export function getCurrentAlert(){
     return { buttons: buttonsMapped }
 }
 
-export function updateButtonsMappedText(oldText, newText){
+export function updateButtonsMappedText(oldText: TranslatedText, newText: TranslatedText){
     const button = buttonsMapped.get(oldText)
+    if(button === undefined) return
     buttonsMapped.set(newText, button)
     buttonsMapped.delete(oldText)
 }
