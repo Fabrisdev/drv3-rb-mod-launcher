@@ -17,7 +17,7 @@ def get_window_border_size():
 
 def start_gui(devMode, debugMode):
     border_width, border_height = get_window_border_size()
-    window_url = resource_path('src/index.html')
+    window_url = resource_path('src/dist/index.html')
     vite_process = None
     if devMode: 
         vite_path = os.path.abspath('src/node_modules/.bin/vite.cmd')
