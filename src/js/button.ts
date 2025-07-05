@@ -10,10 +10,10 @@ export type Button = {
 }
 
 export type ButtonWrapper = {
-    setVisible: (isVisible: any) => void;
-    setText: (text: any) => void;
-    onClick: (callback: any) => void;
-    setClickable: (clickable: any) => void;
+    setVisible: (isVisible: boolean) => void;
+    setText: (text: TranslatedText | string) => void;
+    onClick: (callback: () => void) => void;
+    setClickable: (clickable: boolean) => void;
 }
 
 export function button(element: HTMLElement){
