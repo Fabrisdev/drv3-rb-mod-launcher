@@ -1,3 +1,7 @@
 from window import start_gui
+import sys
 
-start_gui()
+args = sys.argv[1:]
+devMode = '--dev' in args
+debugMode = '--debug' in args
+start_gui(devMode, debugMode)

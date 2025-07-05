@@ -3,8 +3,8 @@ const data = await modReleases.json()
 const lastRelease = data[0]
 const version = lastRelease.name
 const releaseLink = data[0].html_url
-const modVersionText = document.getElementById('mod-version')
-const installerVersionText = document.getElementById('installer-version')
+const modVersionText = document.getElementById('mod-version')!
+const installerVersionText = document.getElementById('installer-version')!
 modVersionText.innerHTML = `Mod version: <a target="_blank" href="${releaseLink}">${version}</a>`
 window.addEventListener('language-selected', (event) => {
     const { language } = event.detail
