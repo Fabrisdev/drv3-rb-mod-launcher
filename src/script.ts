@@ -2,13 +2,13 @@ import { getCurrentAlert, showAlert } from "./js/alert.js"
 import { playSelectSoundEffect, playHoverSoundEffect } from "./js/audio.js"
 import { setLanguage } from "./js/language.js"
 
-const installSelectedImage = document.getElementById('install_selected_image')
-const optionsSelectedImage = document.getElementById('options_selected_image')
-const exitSelectedImage = document.getElementById('exit_selected_image')
-const installHitbox = document.getElementById('install_hitbox')
-const optionsHitbox = document.getElementById('options_hitbox')
-const exitHitbox = document.getElementById('exit_hitbox')
-const installationStartedText = document.getElementById('installation_started_text')
+const installSelectedImage = document.getElementById('install_selected_image')!
+const optionsSelectedImage = document.getElementById('options_selected_image')!
+const exitSelectedImage = document.getElementById('exit_selected_image')!
+const installHitbox = document.getElementById('install_hitbox')!
+const optionsHitbox = document.getElementById('options_hitbox')!
+const exitHitbox = document.getElementById('exit_hitbox')!
+const installationStartedText = document.getElementById('installation_started_text')!
 
 installHitbox.addEventListener('mouseenter', () => {
     exitSelectedImage.style.visibility = 'hidden'
@@ -31,7 +31,7 @@ exitHitbox.addEventListener('mouseenter', () => {
     playHoverSoundEffect()
 })
 
-async function checkForOldModVersionAndInstall(danganronpaFilePath){
+async function checkForOldModVersionAndInstall(danganronpaFilePath: string){
     const hasOldModInstallation = await pywebview.api.check_has_old_mod_version_installed()
     if(hasOldModInstallation){
         showAlert({
@@ -123,10 +123,11 @@ installHitbox.addEventListener('click', async () => {
     checkForOldModVersionAndInstall("STEAM_PATH")
 })
 
-function showInstallationStatus(status){
+function showInstallationStatus(status: string){
     if(status === "INSTALL FINISHED"){
         const { buttons } = getCurrentAlert()
         const button = buttons.get("...") ?? buttons.get("SKIP") ?? buttons.get("SALTAR") ?? buttons.get("PASSER")
+        if(button === undefined) return
         button.setText({
             en: "OK",
             es: "Vale",
@@ -186,6 +187,7 @@ window.showStartedCheckingGameIntegrityAlert = showStartedCheckingGameIntegrityA
 function stopShowingCheckingGameIntegrityAlert(){
     const { buttons } = getCurrentAlert()
     const button = buttons.get("SKIP") ?? buttons.get("SALTAR") ?? buttons.get("PASSER")
+    if(button === undefined) return
     button.setClickable(false)
     button.setText({
         en: "...",
@@ -196,7 +198,7 @@ function stopShowingCheckingGameIntegrityAlert(){
 
 window.stopShowingCheckingGameIntegrityAlert = stopShowingCheckingGameIntegrityAlert
 
-function showIntegrityCheckStatus(status){
+function showIntegrityCheckStatus(status: string){
     installationStartedText.innerHTML = status
 }
 
