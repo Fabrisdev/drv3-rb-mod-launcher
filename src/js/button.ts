@@ -4,7 +4,7 @@ import { getLanguage, type TranslatedText } from "./language.ts"
 
 
 export type Button = {
-    text: TranslatedText,
+    text: TranslatedText | string,
     onClick: () => void,
     isClickable?: boolean,
 }
@@ -35,10 +35,11 @@ export function button(element: HTMLElement){
         setVisible: (isVisible: boolean) => {
             element.style.visibility = isVisible ? 'visible' : 'hidden'
         },
-        setText: (text: TranslatedText) => {
+        setText: (text: TranslatedText | string) => {
             const selectedLanguage = getLanguage()
-            updateButtonsMappedText(element.children[1].innerHTML, text[selectedLanguage])
-            element.children[1].innerHTML = text[selectedLanguage]
+            const buttonText = typeof text === 'string' ? text : text[selectedLanguage]
+            updateButtonsMappedText(element.children[1].innerHTML, buttonText)
+            element.children[1].innerHTML = buttonText
         },
         onClick: (callback: () => void) => {
             const newElement = element.cloneNode(true) as HTMLElement
