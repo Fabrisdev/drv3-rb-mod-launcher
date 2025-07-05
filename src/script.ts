@@ -166,11 +166,7 @@ function showStartedCheckingGameIntegrityAlert(){
                         },
                         buttons: [
                             {
-                                text: {
-                                    en: "...",
-                                    es: "...",
-                                    fr: "..."
-                                },
+                                text: "...",
                                 onClick: () => {},
                                 isClickable: false
                             }
@@ -189,11 +185,7 @@ function stopShowingCheckingGameIntegrityAlert(){
     const button = buttons.get("SKIP") ?? buttons.get("SALTAR") ?? buttons.get("PASSER")
     if(button === undefined) return
     button.setClickable(false)
-    button.setText({
-        en: "...",
-        es: "...",
-        fr: "..."
-    })
+    button.setText("...")
 }
 
 window.stopShowingCheckingGameIntegrityAlert = stopShowingCheckingGameIntegrityAlert
@@ -217,21 +209,13 @@ optionsHitbox.addEventListener('click', async () => {
         },
         buttons: [
             {
-                text: {
-                    en: "MOD",
-                    es: "MOD",
-                    fr: "MOD"
-                },
+                text: "MOD",
                 onClick: () => {
                     pywebview.api.change_mod_path()
                 } 
             },
             {
-                text: {
-                    en: "DRV3",
-                    es: "DRV3",
-                    fr: "DRV3"
-                },
+                text: "DRV3",
                 onClick: () => {
                     pywebview.api.change_drv3_path()
                 }
