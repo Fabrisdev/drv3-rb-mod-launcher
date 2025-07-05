@@ -12,14 +12,17 @@ def get_window_border_size():
     title_bar_height = screen(4)
     return border_width * 2, border_height * 2 + title_bar_height
 
-def start_gui():
+def start_gui(devMode, debugMode):
     border_width, border_height = get_window_border_size()
+    window_url = resource_path('src/index.html')
+    if devMode: 
+        window_url = 'http://localhost:5173'
     webview.create_window(
         'Danganronpa V3: Resolute Rebellion', 
-        'http://localhost:5173',
+        window_url,
         js_api=Api(),
         resizable=False,
         width=1280 + border_width + 8,
         height=720 + border_height + 8,
     )
-    webview.start()
+    webview.start(debug=debugMode)
