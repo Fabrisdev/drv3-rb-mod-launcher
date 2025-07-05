@@ -242,38 +242,22 @@ optionsHitbox.addEventListener('click', async () => {
 })
 
 showAlert({
-    text: {
-        en: "Before starting, please choose your preferred language. The game will also be installed in that language",
-        es: "Before starting, please choose your preferred language. The game will also be installed in that language",
-        fr: "Before starting, please choose your preferred language. The game will also be installed in that language"
-    },
+    text: "Before starting, please choose your preferred language. The game will also be installed in that language",
     buttons: [
         {
-            text: {
-                en: "English",
-                es: "English",
-                fr: "English"
-            },
+            text: "English",
             onClick: () => {
                 setLanguage('en')
             }
         },
-                {
-            text: {
-                en: "Spanish",
-                es: "Spanish",
-                fr: "Spanish"
-            },
+        {
+            text: "Spanish",
             onClick: () => {
                 setLanguage('es')
             }
         },
-                {
-            text: {
-                en: "French",
-                es: "French",
-                fr: "French"
-            },
+        {
+            text: "French",
             onClick: () => {
                 setLanguage('fr')
             }
