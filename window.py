@@ -2,6 +2,9 @@ import webview
 from lib import resource_path
 from api import Api
 from ctypes import windll
+import subprocess
+import os
+import signal
 windll.user32.SetProcessDPIAware()
 
 def get_window_border_size():
@@ -15,7 +18,14 @@ def get_window_border_size():
 def start_gui(devMode, debugMode):
     border_width, border_height = get_window_border_size()
     window_url = resource_path('src/index.html')
+    vite_process = None
     if devMode: 
+        vite_path = os.path.abspath('src/node_modules/.bin/vite.cmd')
+        vite_process = subprocess.Popen(
+            [vite_path],
+            cwd=os.path.abspath('src'),
+            creationflags=subprocess.CREATE_NEW_PROCESS_GROUP
+        )
         window_url = 'http://localhost:5173'
     webview.create_window(
         'Danganronpa V3: Resolute Rebellion', 
@@ -26,3 +36,6 @@ def start_gui(devMode, debugMode):
         height=720 + border_height + 8,
     )
     webview.start(debug=debugMode)
+    if vite_process:
+        vite_process.send_signal(signal.CTRL_BREAK_EVENT)
+        vite_process.wait()
