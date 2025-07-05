@@ -63,7 +63,7 @@
   },
   {
    "optionDest": "datas",
-   "value": "src;src/"
+   "value": "src/dist;src/dist"
   },
   {
    "optionDest": "datas",
