@@ -123,23 +123,6 @@ def send_message_about_game_integrity_check_status(file_path, read_percentage):
     send_message_about_integrity_check_status(check_order[file_name_with_extension])
 
 def check_game_integrity(danganronpa_path, language):
-    messages_translated = {
-        "en": {
-            "missing_data_win_us": "partition_data_win_us CPK is missing. Please make sure you're playing in English. Otherwise, repair your install",
-            "missing_single_file": "{MISSING_CPK} CPK is missing. Please make sure it's in data/win. Otherwise, repair your install",
-            "missing_multiple_files": "{MISSING_CPKS_SEPARATED_BY_COMMA} CPKs are missing. Please make sure they are in data/win. Otherwise, repair your install"
-        },
-        "es": {
-            "missing_data_win_us": "El CPK partition_data_win_us no se ha encontrado. Por favor, asegurate de estar jugando en inglés. De lo contrario, repara tu instalación",
-            "missing_single_file": "El CPK {MISSING_CPK} no se ha encontrado. Por favor, asegurate de que esté en data/win. De lo contrario, repara tu instalación",
-            "missing_multiple_files": "Los CPKs {MISSING_CPKS_SEPARATED_BY_COMMA} no se han encontrado. Por favor, asegurate de que estén en data/win. De lo contrario, repara tu instalación"
-        },
-        "fr": {
-            "missing_data_win_us": "Le CPK partition_data_win_us n'a pas été trouvé. Assurez vous de jouer en Français. Autrement, réparez votre installation.",
-            "missing_single_file": "Le CPK {MISSING_CPK} n'a pas été trouvé. Assurez vous qu'il se trouve dans data/win. Autrement, réparez votre installation.",
-            "missing_multiple_files": "Les CPK {MISSING_CPKS_SEPARATED_BY_COMMA} n'ont pas été trouvés. Assurez vous qu'ils se trouvent dans data/win. Autrement, réparez votre installation."
-        },
-    }
     show_started_checking_game_integrity()
     game_executable = os.path.join(program_files_x86_folder_path, "Steam", "steamapps", "common", "Danganronpa V3 Killing Harmony", "Dangan3Win.exe")
     if danganronpa_path != "STEAM_PATH": game_executable = danganronpa_path
