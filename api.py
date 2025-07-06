@@ -42,7 +42,12 @@ class Api:
             send_message_about_installation_status("Installation de mod terminée. Création d'un racourci...")
         if drv3_user_configured_path != "": create_shortcut(drv3_user_configured_path, mod_user_configured_path)
         else: create_shortcut(danganronpa_path, mod_user_configured_path)
-        send_message_about_installation_status('All done! The mod has been installed. A launcher has been added on your desktop')
+        if language == 'en':
+            send_message_about_installation_status('All done! The mod has been installed. A launcher has been added on your desktop')
+        if language == 'es':
+            send_message_about_installation_status('¡Pronto! El mod ha sido instalado. Un atajo ha sido agregado a tu escritorio')
+        if language == 'fr':
+            send_message_about_installation_status('Tout est bon ! Le mod a été installé. Un launcher a été ajouté sur votre bureau.')
         finish_install()
 
     def check_has_old_mod_version_installed(self):
