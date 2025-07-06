@@ -201,7 +201,7 @@ def check_game_integrity(danganronpa_path, language):
     if language == 'en' or language == 'es':
         files_to_check_integrity["partition_data_win_us.cpk"] = "c0e03d82833c4d6e9c60e1517c1a2933a914bcd12383a1278d773b5e07d582901812e0331e9dc58b89a4462e2f2400238f9f40c7f3694d8c1ca8f4ef64ee442b"
     if language == 'fr':
-        files_to_check_integrity["partition_data_win_fr.cpk"] = "???"
+        files_to_check_integrity["partition_data_win_fr.cpk"] = "85392c0f10641861880c6e09af170ea06747d904001d9cbc671935dba52b8632c0e1285e2d63f89aca37f03fac72ae425265650e4c7014a3fb6ddcff10dde735"
 
     for file, hash in files_to_check_integrity.items():
         if should_skip_game_integrity_check: return "SKIPPED"
