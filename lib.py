@@ -24,7 +24,12 @@ should_skip_game_integrity_check = False
 
 def download_mod(language):
     progress_callback = partial(show_progress, language=language)
-    urlretrieve(mod_download_link_en, os.path.join(temp_folder_path, "resolute_rebellion.7z"), progress_callback)
+    mod_download_link = mod_download_link_en
+    if language == 'es':
+        mod_download_link = mod_download_link_es
+    if language == 'fr':
+        mod_download_link = mod_download_link_fr
+    urlretrieve(mod_download_link, os.path.join(temp_folder_path, "resolute_rebellion.7z"), progress_callback)
 
 def resource_path(relative_path):
     try:
