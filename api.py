@@ -36,24 +36,60 @@ class Api:
     def check_has_danganronpa_installed(self):
         return has_danganronpa_installed() or drv3_user_configured_path != ""
     
-    def ask_for_danganronpa_file_path(self):
+    def ask_for_danganronpa_file_path(self, language):
+        messagesTranslated = {
+            "en": {
+                "title": "Select Danganronpa's .EXE",
+                "filetypes": "Danganronpa's executable"
+            },
+            "es": {
+                "title": "Selecciona el .EXE de Danganronpa",
+                "filetypes": "Ejecutable de Danganronpa"
+            },
+            "fr": {
+                "title": "Selectionnez le .EXE de Danganronpa",
+                "filetypes": "Fichier executable de Danganronpa"
+            }
+        }
+        message = messagesTranslated[language]
         return filedialog.askopenfilename(
-            title="Select Danganronpa's .EXE", 
-            filetypes=[("Danganronpa's executable", "*.exe")]
+            title=message['title'], 
+            filetypes=[(message['filetypes'], "*.exe")]
         )
     
-    def change_drv3_path(self):
+    def change_drv3_path(self, language):
+        messagesTranslated = {
+            "en": {
+                "title": "Select Danganronpa's .EXE",
+                "filetypes": "Danganronpa's executable"
+            },
+            "es": {
+                "title": "Selecciona el .EXE de Danganronpa",
+                "filetypes": "Ejecutable de Danganronpa"
+            },
+            "fr": {
+                "title": "Selectionnez le .EXE de Danganronpa",
+                "filetypes": "Fichier executable de Danganronpa"
+            }
+        }
+        message = messagesTranslated[language]
         drv3_path = filedialog.askopenfilename(
-            title="Select Danganronpa's .EXE", 
-            filetypes=[("Danganronpa's executable", "*.exe")]
+            title=message['title'], 
+            filetypes=[(message['filetypes'], "*.exe")]
         )
         if drv3_path == "": return
         global drv3_user_configured_path
         drv3_user_configured_path = drv3_path
 
-    def change_mod_path(self):
+    def change_mod_path(self, language):
+        titlesTranslated = {
+            "en": "Select the installation directory for the mod",
+            "es": "Elige la carpeta de instalación del mod",
+            "fr": "Selectionnez le repertoire d'installation pour le mod."
+        }
+        title = titlesTranslated[language]
         mod_path = filedialog.askdirectory(
-            title="Select installation directory"
+            title=title
         )
         global mod_user_configured_path
         if mod_path == "": return

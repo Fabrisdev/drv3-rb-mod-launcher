@@ -1,6 +1,6 @@
 import { getCurrentAlert, showAlert } from "./js/alert.js"
 import { playSelectSoundEffect, playHoverSoundEffect } from "./js/audio.js"
-import { setLanguage } from "./js/language.js"
+import { getLanguage, setLanguage } from "./js/language.js"
 
 const installSelectedImage = document.getElementById('install_selected_image')!
 const optionsSelectedImage = document.getElementById('options_selected_image')!
@@ -103,7 +103,8 @@ installHitbox.addEventListener('click', async () => {
                         fr: "Oui"
                     },
                     onClick: async () => {
-                        const danganronpaFilePath = await pywebview.api.ask_for_danganronpa_file_path() 
+                        const selectedLanguage = getLanguage()
+                        const danganronpaFilePath = await pywebview.api.ask_for_danganronpa_file_path(selectedLanguage) 
                         if(danganronpaFilePath === "") return
                         checkForOldModVersionAndInstall(danganronpaFilePath)
                     }
@@ -201,6 +202,7 @@ exitHitbox.addEventListener('click', () => {
 })
 
 optionsHitbox.addEventListener('click', async () => {
+    const language = getLanguage()
     showAlert({
         text: {
             en: "You can either change the mod's installation path or Danganronpa V3: Killing Harmony's current installation path",
@@ -211,13 +213,13 @@ optionsHitbox.addEventListener('click', async () => {
             {
                 text: "MOD",
                 onClick: () => {
-                    pywebview.api.change_mod_path()
+                    pywebview.api.change_mod_path(language)
                 } 
             },
             {
                 text: "DRV3",
                 onClick: () => {
-                    pywebview.api.change_drv3_path()
+                    pywebview.api.change_drv3_path(language)
                 }
             }
         ],
