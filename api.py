@@ -20,7 +20,7 @@ class Api:
         if language == 'en':
             send_message_about_installation_status('Finished downloading mod. Copying Reloaded Installation and installing the mod...')
         if language == 'es':
-            send_message_about_installation_status('Finalizando descarga del mod. Copiando la instalación de Reloaded e instalando el mod...')
+            send_message_about_installation_status('Descarga del mod finalizada. Copiando la instalación de Reloaded e instalando el mod...')
         if language == 'fr':
             send_message_about_installation_status("Téléchargement du mod terminé. Copie de l'installation de Reloaded et installation du mod...")
         extract_and_store_reloaded_installation(mod_user_configured_path)
@@ -34,7 +34,6 @@ class Api:
         try_delete_old_reloaded_configs()
         try_delete_old_mod_versions()
         extract_and_store_mod(mod_user_configured_path)
-        send_message_about_installation_status('Finished installing the mod. Creating shortcut...')
         if drv3_user_configured_path != "": create_shortcut(drv3_user_configured_path, mod_user_configured_path)
         else: create_shortcut(danganronpa_path, mod_user_configured_path)
         send_message_about_installation_status('All done! The mod has been installed. A launcher has been added on your desktop')
