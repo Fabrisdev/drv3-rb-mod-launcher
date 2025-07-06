@@ -123,6 +123,23 @@ def send_message_about_game_integrity_check_status(file_path, read_percentage):
     send_message_about_integrity_check_status(check_order[file_name_with_extension])
 
 def check_game_integrity(danganronpa_path, language):
+    messages_translated = {
+        "en": {
+            "missing_data_win_us": "partition_data_win_us CPK is missing. Please make sure you're playing in English. Otherwise, repair your install",
+            "missing_single_file": "{MISSING_CPK} CPK is missing. Please make sure it's in data/win. Otherwise, repair your install",
+            "missing_multiple_files": "{MISSING_CPKS_SEPARATED_BY_COMMA} CPKs are missing. Please make sure they are in data/win. Otherwise, repair your install"
+        },
+        "es": {
+            "missing_data_win_us": "El CPK partition_data_win_us no se ha encontrado. Por favor, asegurate de estar jugando en inglés. De lo contrario, repara tu instalación",
+            "missing_single_file": "El CPK {MISSING_CPK} no se ha encontrado. Por favor, asegurate de que esté en data/win. De lo contrario, repara tu instalación",
+            "missing_multiple_files": "Los CPKs {MISSING_CPKS_SEPARATED_BY_COMMA} no se han encontrado. Por favor, asegurate de que estén en data/win. De lo contrario, repara tu instalación"
+        },
+        "fr": {
+            "missing_data_win_us": "Le CPK partition_data_win_us n'a pas été trouvé. Assurez vous de jouer en Français. Autrement, réparez votre installation.",
+            "missing_single_file": "Le CPK {MISSING_CPK} n'a pas été trouvé. Assurez vous qu'il se trouve dans data/win. Autrement, réparez votre installation.",
+            "missing_multiple_files": "Les CPK {MISSING_CPKS_SEPARATED_BY_COMMA} n'ont pas été trouvés. Assurez vous qu'ils se trouvent dans data/win. Autrement, réparez votre installation."
+        },
+    }
     show_started_checking_game_integrity()
     game_executable = os.path.join(program_files_x86_folder_path, "Steam", "steamapps", "common", "Danganronpa V3 Killing Harmony", "Dangan3Win.exe")
     if danganronpa_path != "STEAM_PATH": game_executable = danganronpa_path
@@ -131,10 +148,14 @@ def check_game_integrity(danganronpa_path, language):
         send_message_about_game_installation_modified()
         return "MODIFIED"
     files_to_check = {
-        "partition_data_win.cpk": "53ea22e09d98029f88a4565d230d842ce4f6097ad6138073e54aa0a8d6e6bc397bc2e8b33b19d6b4b0a9c727d6b0796147b46e0409c1fc17d64a09fb1536e2c2", 
-        "partition_data_win_us.cpk": "c0e03d82833c4d6e9c60e1517c1a2933a914bcd12383a1278d773b5e07d582901812e0331e9dc58b89a4462e2f2400238f9f40c7f3694d8c1ca8f4ef64ee442b", 
-        "partition_resident_win.cpk": "10ac990ea8fb9b2f7ee68b23aeb61b998fc21c4092bf8f6327aadd80c1227bd9e850e85e95f0bc8093de6d652fe7c43f56588ab24db471ef66e6bfc3208b489d"
+        "partition_data_win.cpk": "53ea22e09d98029f88a4565d230d842ce4f6097ad6138073e54aa0a8d6e6bc397bc2e8b33b19d6b4b0a9c727d6b0796147b46e0409c1fc17d64a09fb1536e2c2",  
+        "partition_resident_win.cpk": "10ac990ea8fb9b2f7ee68b23aeb61b998fc21c4092bf8f6327aadd80c1227bd9e850e85e95f0bc8093de6d652fe7c43f56588ab24db471ef66e6bfc3208b489d",
     }
+    if language == 'en' or language == 'es':
+        files_to_check['partition_data_win_us.cpk'] = "c0e03d82833c4d6e9c60e1517c1a2933a914bcd12383a1278d773b5e07d582901812e0331e9dc58b89a4462e2f2400238f9f40c7f3694d8c1ca8f4ef64ee442b"
+    if language == 'fr':
+        files_to_check['partition_data_win_fr.cpk'] = "UNKNOWN"
+        
     missing_files = []
     for file, hash in files_to_check.items():
         path_to_file = os.path.abspath(os.path.join(path_to_game_data, file))
