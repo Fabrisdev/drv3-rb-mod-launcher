@@ -15,7 +15,7 @@ declare global {
     const pywebview: {
         api: {
             check_has_old_mod_version_installed: () => Promise<string>,
-            install: (path: string) => void,
+            install: (path: string, language: SupportedLanguages) => void,
             check_has_danganronpa_installed: () => Promise<boolean>,
             ask_for_danganronpa_file_path: (language: SupportedLanguages) => Promise<string>,
             skip_game_integrity_check: () => void,

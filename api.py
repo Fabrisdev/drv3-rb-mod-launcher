@@ -9,12 +9,12 @@ class Api:
     def exit(self):
         webview.windows[0].destroy()
 
-    def install(self, danganronpa_path):
+    def install(self, danganronpa_path, language):
         if drv3_user_configured_path != "": 
-            game_integrity_status = check_game_integrity(drv3_user_configured_path)
+            game_integrity_status = check_game_integrity(drv3_user_configured_path, language)
             if(game_integrity_status == "MODIFIED"): return
         else: 
-            game_integrity_status = check_game_integrity(danganronpa_path)
+            game_integrity_status = check_game_integrity(danganronpa_path, language)
             if(game_integrity_status == "MODIFIED"): return
         download_mod()
         send_message_about_installation_status('Finished downloading mod. Copying Reloaded Installation and installing the mod...')

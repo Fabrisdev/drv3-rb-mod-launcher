@@ -33,6 +33,7 @@ exitHitbox.addEventListener('mouseenter', () => {
 
 async function checkForOldModVersionAndInstall(danganronpaFilePath: string){
     const hasOldModInstallation = await pywebview.api.check_has_old_mod_version_installed()
+    const language = getLanguage()
     if(hasOldModInstallation){
         showAlert({
             text: {
@@ -48,7 +49,7 @@ async function checkForOldModVersionAndInstall(danganronpaFilePath: string){
                         fr: "Oui"
                     },
                     onClick: () => {
-                        pywebview.api.install(danganronpaFilePath)
+                        pywebview.api.install(danganronpaFilePath, language)
                     }
                 },
                 {
@@ -63,7 +64,7 @@ async function checkForOldModVersionAndInstall(danganronpaFilePath: string){
         })
         return
     }
-    pywebview.api.install(danganronpaFilePath)
+    pywebview.api.install(danganronpaFilePath, language)
 }
 
 installHitbox.addEventListener('click', async () => {
