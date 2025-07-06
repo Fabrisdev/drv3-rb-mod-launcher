@@ -128,43 +128,94 @@ def check_game_integrity(danganronpa_path, language):
     if danganronpa_path != "STEAM_PATH": game_executable = danganronpa_path
     path_to_game_data = os.path.join(os.path.dirname(game_executable), "data", "win")
     if not os.path.exists(path_to_game_data): 
-        send_message_about_game_installation_modified()
+        send_message_about_game_installation_modified(language)
         return "MODIFIED"
-    files_to_check = {
+    
+    #Defining files to check for
+    required_files_missing = search_for_missing_files([
+        "partition_data_win.cpk",
+        "partition_resident_win.cpk"
+    ])
+
+    language_files_found = search_for_files([
+        "partition_data_win_us.cpk",
+        "partition_data_win_fr.cpk",
+    ])
+
+    #Checking if the files exist, integrity check will come after
+    #If language = 'en' or 'es' but partition_data_win_fr was found
+    if "partition_data_win_fr.cpk" in language_files_found:
+        if language == 'en':
+            send_message_about_cpk_missing("You've selected the English version but your game is configured for French. Please change it and try again")
+            return "MODIFIED"
+        if language == 'es':
+            send_message_about_cpk_missing("Has seleccionado la versión en español, pero tu juego debe estar configurado en inglés para usarla. Por favor, cámbialo e inténtalo de nuevo")
+            return "MODIFIED"
+
+    #If language = 'fr' but partition_data_win_us was found
+    if language == 'fr' and "partition_data_win_us.cpk" in language_files_found:
+        send_message_about_cpk_missing("i dont have this translation yet")
+        return "MODIFIED"
+
+    #If neither partition_data_win_us or partition_data_win_fr is found, show generic error
+    if "partition_data_win_us.cpk" not in language_files_found and "partition_data_win_fr.cpk" not in language_files_found:
+        if language == 'en':
+            send_message_about_cpk_missing("Your game installation seems to be either corrupt or already modified by another mod. Please repair your DRV3 installation")
+        if language == 'es':
+            send_message_about_cpk_missing("La instalación de tu juego parece estar corrupta o ya ha sido modificado por otro mod. Por favor, repara tu instalación de DRV3")
+        if language == 'fr':
+            send_message_about_cpk_missing("L'installation de votre jeu semble être corrompues ou déjà modifiée par un autre mod. Veuillez réparer l'installation de DRV3")
+        return "MODIFIED"
+
+    #Time to handle the required files 
+    if len(required_files_missing) == 1: #If only one file is missing
+        MISSING_CPK = required_files_missing[0]
+        if language == 'en':
+            send_message_about_cpk_missing(f"{MISSING_CPK} CPK is missing. Please make sure it's in data/win. Otherwise, repair your install")
+        if language == 'es':
+            send_message_about_cpk_missing(f"El CPK {MISSING_CPK} no se ha encontrado. Por favor, asegurate de que esté en data/win. De lo contrario, repara tu instalación")
+        if language == 'fr':
+            send_message_about_cpk_missing(f"Le CPK {MISSING_CPK} n'a pas été trouvé. Assurez vous qu'il se trouve dans data/win. Autrement, réparez votre installation.")
+        return "MODIFIED"
+
+    if len(required_files_missing) >= 2: #If more than one is missing
+        MISSING_CPKS_SEPARATED_BY_COMMA = ', '.join(required_files_missing)
+        if language == 'en':
+            send_message_about_cpk_missing(f"{MISSING_CPKS_SEPARATED_BY_COMMA} CPKs are missing. Please make sure they are in data/win. Otherwise, repair your install")
+        if language == 'es':
+            send_message_about_cpk_missing(f"Los CPKs {MISSING_CPKS_SEPARATED_BY_COMMA} no se han encontrado. Por favor, asegurate de que estén en data/win. De lo contrario, repara tu instalación")
+        if language == 'fr':
+            send_message_about_cpk_missing(f"Les CPK {MISSING_CPKS_SEPARATED_BY_COMMA} n'ont pas été trouvés. Assurez vous qu'ils se trouvent dans data/win. Autrement, réparez votre installation.")
+        return "MODIFIED"
+
+    #Lastly, we check the integrity of the files, however, we gotta watch out to only check those that matter to us
+    files_to_check_integrity = {
         "partition_data_win.cpk": "53ea22e09d98029f88a4565d230d842ce4f6097ad6138073e54aa0a8d6e6bc397bc2e8b33b19d6b4b0a9c727d6b0796147b46e0409c1fc17d64a09fb1536e2c2",  
         "partition_resident_win.cpk": "10ac990ea8fb9b2f7ee68b23aeb61b998fc21c4092bf8f6327aadd80c1227bd9e850e85e95f0bc8093de6d652fe7c43f56588ab24db471ef66e6bfc3208b489d",
     }
     if language == 'en' or language == 'es':
-        files_to_check['partition_data_win_us.cpk'] = "c0e03d82833c4d6e9c60e1517c1a2933a914bcd12383a1278d773b5e07d582901812e0331e9dc58b89a4462e2f2400238f9f40c7f3694d8c1ca8f4ef64ee442b"
+        files_to_check_integrity["partition_data_win_us.cpk"] = "c0e03d82833c4d6e9c60e1517c1a2933a914bcd12383a1278d773b5e07d582901812e0331e9dc58b89a4462e2f2400238f9f40c7f3694d8c1ca8f4ef64ee442b"
     if language == 'fr':
-        files_to_check['partition_data_win_fr.cpk'] = "UNKNOWN"
-        
-    missing_files = []
-    for file, hash in files_to_check.items():
-        path_to_file = os.path.abspath(os.path.join(path_to_game_data, file))
-        if not os.path.exists(path_to_file): missing_files.append(os.path.splitext(file)[0])
-    if len(missing_files) == 1 and missing_files[0] == "partition_data_win_us":
-        send_message_about_cpk_missing(f"{missing_files[0]} CPK is missing. Please make sure you're playing in English. Otherwise, repair your install.")
-        return "MODIFIED"
-    if len(missing_files) == 1:
-        send_message_about_cpk_missing(f"{missing_files[0]} CPK is missing. Please make sure it's in data/win. Otherwise, repair your install.")
-        return "MODIFIED"
-    if len(missing_files) >= 2:
-        send_message_about_cpk_missing(f"{', '.join(missing_files)} CPKs are missing. Please make sure they are in data/win. Otherwise, repair your install.")
-        return "MODIFIED"
-    for file, hash in files_to_check.items():
+        files_to_check_integrity["partition_data_win_fr.cpk"] = "???"
+
+    for file, hash in files_to_check_integrity.items():
         if should_skip_game_integrity_check: return "SKIPPED"
         path_to_file = os.path.abspath(os.path.join(path_to_game_data, file))
         hash_obtained = check_file_with_sha512(path_to_file)
         if should_skip_game_integrity_check: return "SKIPPED"
         if hash != hash_obtained: 
-            send_message_about_game_installation_modified()
+            send_message_about_game_installation_modified(language)
             return "MODIFIED"
     stop_showing_checking_game_integrity()
         
-def send_message_about_game_installation_modified():
+def send_message_about_game_installation_modified(language):
     stop_showing_checking_game_integrity()
-    send_message_about_installation_status("Your game installation seems to be either corrupt or already modified by another mod. Please repair your DRV3 installation.")
+    if language == 'en':
+        send_message_about_installation_status("Your game installation seems to be either corrupt or already modified by another mod. Please repair your DRV3 installation")
+    if language == 'es':
+        send_message_about_installation_status("La instalación de tu juego parece estar corrupta o ya ha sido modificado por otro mod. Por favor, repara tu instalación de DRV3")
+    if language == 'fr':
+        send_message_about_installation_status("L'installation de votre jeu semble être corrompues ou déjà modifiée par un autre mod. Veuillez réparer l'installation de DRV3")
     send_message_about_installation_status("INSTALL FINISHED")
 
 def send_message_about_cpk_missing(message):
