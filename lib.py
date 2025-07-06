@@ -140,12 +140,12 @@ def check_game_integrity(danganronpa_path, language):
     required_files_missing = search_for_missing_files([
         "partition_data_win.cpk",
         "partition_resident_win.cpk"
-    ])
+    ], path_to_game_data)
 
     language_files_found = search_for_files([
         "partition_data_win_us.cpk",
         "partition_data_win_fr.cpk",
-    ])
+    ], path_to_game_data)
 
     #Checking if the files exist, integrity check will come after
     #If language = 'en' or 'es' but partition_data_win_fr was found
