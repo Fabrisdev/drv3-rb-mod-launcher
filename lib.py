@@ -184,3 +184,19 @@ def show_started_checking_game_integrity():
 
 def send_message_about_integrity_check_status(message):
     webview.windows[0].evaluate_js(f'showIntegrityCheckStatus("{message}")')
+
+def search_for_missing_files(files, path_to_game_data):
+    missing_files = []
+    for file in files:
+        path_to_file = os.path.abspath(os.path.join(path_to_game_data, file))
+        if not os.path.exists(path_to_file): 
+            missing_files.append(file)
+    return missing_files
+
+def search_for_files(files, path_to_game_data):
+    files_found = []
+    for file in files:
+        path_to_file = os.path.abspath(os.path.join(path_to_game_data, file))
+        if os.path.exists(path_to_file): 
+            files_found.append(file)
+    return files_found
