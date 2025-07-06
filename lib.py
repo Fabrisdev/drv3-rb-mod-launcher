@@ -11,7 +11,9 @@ import hashlib
 from functools import partial
 
 mod_foldername = "drv3.rewrite.resoluterebellion"
-mod_download_link = "https://github.com/silicon-git/ResoluteRebellion-releases/releases/download/release/drv3.rewrite.resoluterebellion.7z"
+mod_download_link_en = "https://github.com/silicon-git/ResoluteRebellion-releases/releases/download/release/drv3.rewrite.resoluterebellion.7z"
+mod_download_link_es = "https://github.com/silicon-git/ResoluteRebellion-releases/releases/download/es-release/drv3.rewrite.resoluterebelliones.7z"
+mod_download_link_fr = "https://github.com/silicon-git/ResoluteRebellion-releases/releases/download/fr-release/drv3.rewrite.resoluterebellionfr.7z"
 
 reloaded_installation_foldername = "Reloaded II (Resolute Rebellion)"
 documents_folder_path = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Documents') 
@@ -22,7 +24,7 @@ should_skip_game_integrity_check = False
 
 def download_mod(language):
     progress_callback = partial(show_progress, language=language)
-    urlretrieve(mod_download_link, os.path.join(temp_folder_path, "resolute_rebellion.7z"), progress_callback)
+    urlretrieve(mod_download_link_en, os.path.join(temp_folder_path, "resolute_rebellion.7z"), progress_callback)
 
 def resource_path(relative_path):
     try:
