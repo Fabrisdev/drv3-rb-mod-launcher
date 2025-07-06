@@ -122,7 +122,7 @@ def send_message_about_game_integrity_check_status(file_path, read_percentage):
     }
     send_message_about_integrity_check_status(check_order[file_name_with_extension])
 
-def check_game_integrity(danganronpa_path):
+def check_game_integrity(danganronpa_path, language):
     show_started_checking_game_integrity()
     game_executable = os.path.join(program_files_x86_folder_path, "Steam", "steamapps", "common", "Danganronpa V3 Killing Harmony", "Dangan3Win.exe")
     if danganronpa_path != "STEAM_PATH": game_executable = danganronpa_path
