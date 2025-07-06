@@ -74,14 +74,14 @@ installHitbox.addEventListener('click', async () => {
             text: {
                 en: "You don't seem to have an internet connection. Please check your network and try again",
                 es: "No pareces que tengas conexión a internet. Por favor, revisa tu red e inténtalo de nuevo",
-                fr: "NOT YET DONE"
+                fr: "Il semblerait que vous n'êtes pas connecté à internet. Veuillez vérifier votre connection et reéssayer."
             },
             buttons: [
                 {
                     text: {
                         en: "OK",
                         es: "Vale",
-                        fr: "NOT YET DONE"
+                        fr: "OK"
                     },
                     onClick: () => {}
                 }
@@ -133,7 +133,7 @@ function showInstallationStatus(status: string){
         button.setText({
             en: "OK",
             es: "Vale",
-            fr: "NOT YET DONE"
+            fr: "OK"
         })
         button.onClick(() => {})
         button.setClickable(true)
