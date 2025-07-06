@@ -16,7 +16,7 @@ class Api:
         else: 
             game_integrity_status = check_game_integrity(danganronpa_path, language)
             if(game_integrity_status == "MODIFIED"): return
-        download_mod()
+        download_mod(language)
         send_message_about_installation_status('Finished downloading mod. Copying Reloaded Installation and installing the mod...')
         extract_and_store_reloaded_installation(mod_user_configured_path)
         update_reloaded_app_location(mod_user_configured_path, drv3_user_configured_path)

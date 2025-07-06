@@ -8,6 +8,7 @@ import sys
 import webview
 import json
 import hashlib
+from functools import partial
 
 mod_foldername = "drv3.rewrite.resoluterebellion"
 mod_download_link = "https://github.com/silicon-git/ResoluteRebellion-releases/releases/download/release/drv3.rewrite.resoluterebellion.7z"
@@ -19,8 +20,9 @@ program_files_x86_folder_path = os.environ["ProgramFiles(x86)"]
 game_executable = os.path.join(program_files_x86_folder_path, "Steam", "steamapps", "common", "Danganronpa V3 Killing Harmony", "Dangan3Win.exe")
 should_skip_game_integrity_check = False
 
-def download_mod():
-    urlretrieve(mod_download_link, os.path.join(temp_folder_path, "resolute_rebellion.7z"), show_progress)
+def download_mod(language):
+    progress_callback = partial(show_progress, language=language)
+    urlretrieve(mod_download_link, os.path.join(temp_folder_path, "resolute_rebellion.7z"), progress_callback)
 
 def resource_path(relative_path):
     try:
@@ -71,9 +73,14 @@ def create_shortcut(danganronpa_path, reloaded_path):
     else: shortcut.WorkingDirectory = os.path.join(documents_folder_path, reloaded_installation_foldername)
     shortcut.save()
 
-def show_progress(block_num, block_size, total_size):
+def show_progress(block_num, block_size, total_size, language):
     percentage = round(block_num * block_size / total_size *100,2)
-    send_message_about_installation_status(f"Download of the mod has started. Current percentage: <br>{percentage}%")
+    if language == 'en':
+        send_message_about_installation_status(f"Download of the mod has started. Current percentage: <br>{percentage}%")
+    if language == 'es':
+        send_message_about_installation_status(f"La descarga del mod ha empezado. Porcentaje actual: <br>{percentage}%")
+    if language == 'fr':
+        send_message_about_installation_status(f"Le téléchargement a démarré. Progression actuelle: <br>{percentage}%")
 
 def has_danganronpa_installed():
     return os.path.exists(game_executable)
