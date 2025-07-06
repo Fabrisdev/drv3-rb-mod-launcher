@@ -98,7 +98,7 @@ def update_reloaded_app_location(reloaded_path, danganronpa_path):
     with open(file_location, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)  
 
-def check_file_with_sha512(file_path):
+def check_file_with_sha512(file_path, language):
     block_size = 1048576
     hasher = hashlib.sha512()
     file_size = os.path.getsize(file_path)
@@ -109,16 +109,21 @@ def check_file_with_sha512(file_path):
             hasher.update(bloque)
             read += len(bloque)
             read_percentage = (read / file_size) * 100
-            send_message_about_game_integrity_check_status(file_path, read_percentage)
+            send_message_about_game_integrity_check_status(file_path, read_percentage, language)
     return hasher.hexdigest()
 
-def send_message_about_game_integrity_check_status(file_path, read_percentage):
+def send_message_about_game_integrity_check_status(file_path, read_percentage, language):
     file_name_with_extension = os.path.basename(file_path)
     text = f"Checking game's integrity {read_percentage:.2f}%"
+    if language == 'es':
+        text = f"Revisando la integridad del juego {read_percentage:.2f}%"
+    if language == 'fr':
+        text = f"Verification de l'integrité des fichiers du jeu {read_percentage:.2f}%"
     check_order = {
         "partition_data_win.cpk": f"{text} (1/3)",
-        "partition_data_win_us.cpk": f"{text} (2/3)",
-        "partition_resident_win.cpk": f"{text} (3/3)"
+        "partition_resident_win.cpk": f"{text} (2/3)",
+        "partition_data_win_us.cpk": f"{text} (3/3)",
+        "partition_data_win_fr.cpk": f"{text} (3/3)"
     }
     send_message_about_integrity_check_status(check_order[file_name_with_extension])
 
@@ -201,7 +206,7 @@ def check_game_integrity(danganronpa_path, language):
     for file, hash in files_to_check_integrity.items():
         if should_skip_game_integrity_check: return "SKIPPED"
         path_to_file = os.path.abspath(os.path.join(path_to_game_data, file))
-        hash_obtained = check_file_with_sha512(path_to_file)
+        hash_obtained = check_file_with_sha512(path_to_file, language)
         if should_skip_game_integrity_check: return "SKIPPED"
         if hash != hash_obtained: 
             send_message_about_game_installation_modified(language)
