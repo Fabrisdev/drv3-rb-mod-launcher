@@ -173,7 +173,7 @@ def check_game_integrity(danganronpa_path, language):
 
     #If language = 'fr' but partition_data_win_us was found
     if language == 'fr' and "partition_data_win_us.cpk" in language_files_found:
-        send_message_about_cpk_missing("i dont have this translation yet")
+        send_message_about_cpk_missing("Vous avez selectionné la version Francaise alors que la langue de votre jeu est en Anglais. Veuillez la changer et reessayer.")
         return "MODIFIED"
 
     #If neither partition_data_win_us or partition_data_win_fr is found, show generic error
