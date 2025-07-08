@@ -1,6 +1,6 @@
 import { getCurrentAlert, showAlert } from "./js/alert.js"
 import { playSelectSoundEffect, playHoverSoundEffect } from "./js/audio.js"
-import { setLanguage } from "./js/language.js"
+import { getLanguage, setLanguage } from "./js/language.js"
 
 const installSelectedImage = document.getElementById('install_selected_image')!
 const optionsSelectedImage = document.getElementById('options_selected_image')!
@@ -33,6 +33,7 @@ exitHitbox.addEventListener('mouseenter', () => {
 
 async function checkForOldModVersionAndInstall(danganronpaFilePath: string){
     const hasOldModInstallation = await pywebview.api.check_has_old_mod_version_installed()
+    const language = getLanguage()
     if(hasOldModInstallation){
         showAlert({
             text: {
@@ -48,7 +49,7 @@ async function checkForOldModVersionAndInstall(danganronpaFilePath: string){
                         fr: "Oui"
                     },
                     onClick: () => {
-                        pywebview.api.install(danganronpaFilePath)
+                        pywebview.api.install(danganronpaFilePath, language)
                     }
                 },
                 {
@@ -63,7 +64,7 @@ async function checkForOldModVersionAndInstall(danganronpaFilePath: string){
         })
         return
     }
-    pywebview.api.install(danganronpaFilePath)
+    pywebview.api.install(danganronpaFilePath, language)
 }
 
 installHitbox.addEventListener('click', async () => {
@@ -73,14 +74,14 @@ installHitbox.addEventListener('click', async () => {
             text: {
                 en: "You don't seem to have an internet connection. Please check your network and try again",
                 es: "No pareces que tengas conexión a internet. Por favor, revisa tu red e inténtalo de nuevo",
-                fr: "NOT YET DONE"
+                fr: "Il semblerait que vous n'êtes pas connecté à internet. Veuillez vérifier votre connection et reéssayer."
             },
             buttons: [
                 {
                     text: {
                         en: "OK",
                         es: "Vale",
-                        fr: "NOT YET DONE"
+                        fr: "OK"
                     },
                     onClick: () => {}
                 }
@@ -103,7 +104,8 @@ installHitbox.addEventListener('click', async () => {
                         fr: "Oui"
                     },
                     onClick: async () => {
-                        const danganronpaFilePath = await pywebview.api.ask_for_danganronpa_file_path() 
+                        const selectedLanguage = getLanguage()
+                        const danganronpaFilePath = await pywebview.api.ask_for_danganronpa_file_path(selectedLanguage) 
                         if(danganronpaFilePath === "") return
                         checkForOldModVersionAndInstall(danganronpaFilePath)
                     }
@@ -131,7 +133,7 @@ function showInstallationStatus(status: string){
         button.setText({
             en: "OK",
             es: "Vale",
-            fr: "NOT YET DONE"
+            fr: "OK"
         })
         button.onClick(() => {})
         button.setClickable(true)
@@ -201,6 +203,7 @@ exitHitbox.addEventListener('click', () => {
 })
 
 optionsHitbox.addEventListener('click', async () => {
+    const language = getLanguage()
     showAlert({
         text: {
             en: "You can either change the mod's installation path or Danganronpa V3: Killing Harmony's current installation path",
@@ -211,13 +214,13 @@ optionsHitbox.addEventListener('click', async () => {
             {
                 text: "MOD",
                 onClick: () => {
-                    pywebview.api.change_mod_path()
+                    pywebview.api.change_mod_path(language)
                 } 
             },
             {
                 text: "DRV3",
                 onClick: () => {
-                    pywebview.api.change_drv3_path()
+                    pywebview.api.change_drv3_path(language)
                 }
             }
         ],
