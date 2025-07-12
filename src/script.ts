@@ -2,9 +2,16 @@ import { getCurrentAlert, showAlert } from "./js/alert.js"
 import { playSelectSoundEffect, playHoverSoundEffect } from "./js/audio.js"
 import { getLanguage, setLanguage } from "./js/language.js"
 
-const installSelectedImage = document.getElementById('install_selected_image')!
-const optionsSelectedImage = document.getElementById('options_selected_image')!
-const exitSelectedImage = document.getElementById('exit_selected_image')!
+const installEnglishImage = document.getElementById('install_en')!
+const optionsEnglishImage = document.getElementById('options_en')!
+const exitEnglishImage = document.getElementById('exit_en')!
+const installSpanishImage = document.getElementById('install_es')!
+const optionsSpanishImage = document.getElementById('options_es')!
+const exitSpanishImage = document.getElementById('exit_es')!
+const installFrenchImage = document.getElementById('install_fr')!
+const optionsFrenchImage = document.getElementById('options_fr')!
+const exitFrenchImage = document.getElementById('exit_fr')!
+
 const installHitbox = document.getElementById('install_hitbox')!
 const optionsHitbox = document.getElementById('options_hitbox')!
 const exitHitbox = document.getElementById('exit_hitbox')!
