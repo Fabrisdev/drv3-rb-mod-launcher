@@ -56,23 +56,17 @@ function highlightButton(button: 'install' | 'options' | 'exit') {
 }
 
 installHitbox.addEventListener('mouseenter', () => {
-    exitSelectedImage.style.visibility = 'hidden'
-    optionsSelectedImage.style.visibility = 'hidden'
-    installSelectedImage.style.visibility = 'visible'
+    highlightButton('install')
     playHoverSoundEffect()
 })
 
 optionsHitbox.addEventListener('mouseenter', () => {
-    exitSelectedImage.style.visibility = 'hidden'
-    installSelectedImage.style.visibility = 'hidden'
-    optionsSelectedImage.style.visibility = 'visible'
+    highlightButton('options')
     playHoverSoundEffect()
 })
 
 exitHitbox.addEventListener('mouseenter', () => {
-    installSelectedImage.style.visibility = 'hidden'
-    optionsSelectedImage.style.visibility = 'hidden'
-    exitSelectedImage.style.visibility = 'visible'
+    highlightButton('exit')
     playHoverSoundEffect()
 })
 
