@@ -267,6 +267,8 @@ optionsHitbox.addEventListener('click', async () => {
     })
 })
 
+highlightButton('install')
+
 showAlert({
     text: "Before starting, please choose your preferred language. The game will also be installed in that language",
     buttons: [
