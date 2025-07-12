@@ -1,6 +1,6 @@
 import { getCurrentAlert, showAlert } from "./js/alert.js"
 import { playSelectSoundEffect, playHoverSoundEffect } from "./js/audio.js"
-import { getLanguage, setLanguage } from "./js/language.js"
+import { getLanguage, setLanguage, type SupportedLanguages } from "./js/language.js"
 
 const installEnglishImage = document.getElementById('install_en')!
 const optionsEnglishImage = document.getElementById('options_en')!
@@ -31,8 +31,8 @@ function hideAllButtons() {
     exitFrenchImage.style.visibility = 'hidden'
 }
 
-function highlightButton(button: 'install' | 'options' | 'exit') {
-    const language = getLanguage()
+function highlightButton(button: 'install' | 'options' | 'exit', lang?: SupportedLanguages) {
+    const language = lang ?? getLanguage()
     const buttons = {
         en: {
             install: installEnglishImage,
@@ -291,4 +291,9 @@ showAlert({
             }
         }
     ]
+})
+
+window.addEventListener('language-selected', event => {
+    const { language } = event.detail
+    highlightButton('install', language)
 })
