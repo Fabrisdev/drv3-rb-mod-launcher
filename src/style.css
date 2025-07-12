@@ -8,20 +8,20 @@ video{
     z-index: -1;
 }
 
-#install_selected_image{
+.install_selected_image{
     position: fixed;
     bottom: 1;
     right: 2;
 }
 
-#options_selected_image{
+.options_selected_image{
     position: fixed;
     bottom: 1;
     right: 0;
     visibility: hidden;
 }
 
-#exit_selected_image{
+.exit_selected_image{
     position: fixed;
     bottom: 1;
     right: 0;

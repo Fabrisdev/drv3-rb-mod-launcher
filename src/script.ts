@@ -1,33 +1,72 @@
 import { getCurrentAlert, showAlert } from "./js/alert.js"
 import { playSelectSoundEffect, playHoverSoundEffect } from "./js/audio.js"
-import { getLanguage, setLanguage } from "./js/language.js"
+import { getLanguage, setLanguage, type SupportedLanguages } from "./js/language.js"
 
-const installSelectedImage = document.getElementById('install_selected_image')!
-const optionsSelectedImage = document.getElementById('options_selected_image')!
-const exitSelectedImage = document.getElementById('exit_selected_image')!
+const installEnglishImage = document.getElementById('install_en')!
+const optionsEnglishImage = document.getElementById('options_en')!
+const exitEnglishImage = document.getElementById('exit_en')!
+const installSpanishImage = document.getElementById('install_es')!
+const optionsSpanishImage = document.getElementById('options_es')!
+const exitSpanishImage = document.getElementById('exit_es')!
+const installFrenchImage = document.getElementById('install_fr')!
+const optionsFrenchImage = document.getElementById('options_fr')!
+const exitFrenchImage = document.getElementById('exit_fr')!
+
 const installHitbox = document.getElementById('install_hitbox')!
 const optionsHitbox = document.getElementById('options_hitbox')!
 const exitHitbox = document.getElementById('exit_hitbox')!
 const installationStartedText = document.getElementById('installation_started_text')!
 
+function hideAllButtons() {
+    installEnglishImage.style.visibility = 'hidden'
+    optionsEnglishImage.style.visibility = 'hidden'
+    exitEnglishImage.style.visibility = 'hidden'
+
+    installSpanishImage.style.visibility = 'hidden'
+    optionsSpanishImage.style.visibility = 'hidden'
+    exitSpanishImage.style.visibility = 'hidden'
+
+    installFrenchImage.style.visibility = 'hidden'
+    optionsFrenchImage.style.visibility = 'hidden'
+    exitFrenchImage.style.visibility = 'hidden'
+}
+
+function highlightButton(button: 'install' | 'options' | 'exit', lang?: SupportedLanguages) {
+    const language = lang ?? getLanguage()
+    const buttons = {
+        en: {
+            install: installEnglishImage,
+            options: optionsEnglishImage,
+            exit: exitEnglishImage
+        },
+        es: {
+            install: installSpanishImage,
+            options: optionsSpanishImage,
+            exit: exitSpanishImage
+        },
+        fr: {
+            install: installFrenchImage,
+            options: optionsFrenchImage,
+            exit: exitFrenchImage
+        }
+    }
+    hideAllButtons()
+    const buttonToShow = buttons[language][button]
+    buttonToShow.style.visibility = 'visible'
+}
+
 installHitbox.addEventListener('mouseenter', () => {
-    exitSelectedImage.style.visibility = 'hidden'
-    optionsSelectedImage.style.visibility = 'hidden'
-    installSelectedImage.style.visibility = 'visible'
+    highlightButton('install')
     playHoverSoundEffect()
 })
 
 optionsHitbox.addEventListener('mouseenter', () => {
-    exitSelectedImage.style.visibility = 'hidden'
-    installSelectedImage.style.visibility = 'hidden'
-    optionsSelectedImage.style.visibility = 'visible'
+    highlightButton('options')
     playHoverSoundEffect()
 })
 
 exitHitbox.addEventListener('mouseenter', () => {
-    installSelectedImage.style.visibility = 'hidden'
-    optionsSelectedImage.style.visibility = 'hidden'
-    exitSelectedImage.style.visibility = 'visible'
+    highlightButton('exit')
     playHoverSoundEffect()
 })
 
@@ -228,6 +267,8 @@ optionsHitbox.addEventListener('click', async () => {
     })
 })
 
+highlightButton('install')
+
 showAlert({
     text: "Before starting, please choose your preferred language. The game will also be installed in that language",
     buttons: [
@@ -250,4 +291,9 @@ showAlert({
             }
         }
     ]
+})
+
+window.addEventListener('language-selected', event => {
+    const { language } = event.detail
+    highlightButton('install', language)
 })
