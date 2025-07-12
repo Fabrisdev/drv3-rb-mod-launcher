@@ -17,6 +17,44 @@ const optionsHitbox = document.getElementById('options_hitbox')!
 const exitHitbox = document.getElementById('exit_hitbox')!
 const installationStartedText = document.getElementById('installation_started_text')!
 
+function hideAllButtons() {
+    installEnglishImage.style.visibility = 'hidden'
+    optionsEnglishImage.style.visibility = 'hidden'
+    exitEnglishImage.style.visibility = 'hidden'
+
+    installSpanishImage.style.visibility = 'hidden'
+    optionsSpanishImage.style.visibility = 'hidden'
+    exitSpanishImage.style.visibility = 'hidden'
+
+    installFrenchImage.style.visibility = 'hidden'
+    optionsFrenchImage.style.visibility = 'hidden'
+    exitFrenchImage.style.visibility = 'hidden'
+}
+
+function highlightButton(button: 'install' | 'options' | 'exit') {
+    const language = getLanguage()
+    const buttons = {
+        en: {
+            install: installEnglishImage,
+            options: optionsEnglishImage,
+            exit: exitEnglishImage
+        },
+        es: {
+            install: installSpanishImage,
+            options: optionsSpanishImage,
+            exit: exitSpanishImage
+        },
+        fr: {
+            install: installFrenchImage,
+            options: optionsFrenchImage,
+            exit: exitFrenchImage
+        }
+    }
+    hideAllButtons()
+    const buttonToShow = buttons[language][button]
+    buttonToShow.style.visibility = 'visible'
+}
+
 installHitbox.addEventListener('mouseenter', () => {
     exitSelectedImage.style.visibility = 'hidden'
     optionsSelectedImage.style.visibility = 'hidden'
