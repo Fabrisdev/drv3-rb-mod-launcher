@@ -8,9 +8,12 @@ import sys
 import webview
 import json
 import hashlib
+from functools import partial
 
 mod_foldername = "drv3.rewrite.resoluterebellion"
-mod_download_link = "https://github.com/silicon-git/ResoluteRebellion-releases/releases/download/release/drv3.rewrite.resoluterebellion.7z"
+mod_download_link_en = "https://github.com/silicon-git/ResoluteRebellion-releases/releases/download/release/drv3.rewrite.resoluterebellion.7z"
+mod_download_link_es = "https://github.com/silicon-git/ResoluteRebellion-releases/releases/download/es-release/drv3.rewrite.resoluterebelliones.7z"
+mod_download_link_fr = "https://github.com/silicon-git/ResoluteRebellion-releases/releases/download/fr-release/drv3.rewrite.resoluterebellionfr.7z"
 
 reloaded_installation_foldername = "Reloaded II (Resolute Rebellion)"
 documents_folder_path = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Documents') 
@@ -19,8 +22,14 @@ program_files_x86_folder_path = os.environ["ProgramFiles(x86)"]
 game_executable = os.path.join(program_files_x86_folder_path, "Steam", "steamapps", "common", "Danganronpa V3 Killing Harmony", "Dangan3Win.exe")
 should_skip_game_integrity_check = False
 
-def download_mod():
-    urlretrieve(mod_download_link, os.path.join(temp_folder_path, "resolute_rebellion.7z"), show_progress)
+def download_mod(language):
+    progress_callback = partial(show_progress, language=language)
+    mod_download_link = mod_download_link_en
+    if language == 'es':
+        mod_download_link = mod_download_link_es
+    if language == 'fr':
+        mod_download_link = mod_download_link_fr
+    urlretrieve(mod_download_link, os.path.join(temp_folder_path, "resolute_rebellion.7z"), progress_callback)
 
 def resource_path(relative_path):
     try:
@@ -71,9 +80,14 @@ def create_shortcut(danganronpa_path, reloaded_path):
     else: shortcut.WorkingDirectory = os.path.join(documents_folder_path, reloaded_installation_foldername)
     shortcut.save()
 
-def show_progress(block_num, block_size, total_size):
+def show_progress(block_num, block_size, total_size, language):
     percentage = round(block_num * block_size / total_size *100,2)
-    send_message_about_installation_status(f"Download of the mod has started. Current percentage: <br>{percentage}%")
+    if language == 'en':
+        send_message_about_installation_status(f"Download of the mod has started. Current percentage: <br>{percentage}%")
+    if language == 'es':
+        send_message_about_installation_status(f"La descarga del mod ha empezado. Porcentaje actual: <br>{percentage}%")
+    if language == 'fr':
+        send_message_about_installation_status(f"Le téléchargement a démarré. Progression actuelle: <br>{percentage}%")
 
 def has_danganronpa_installed():
     return os.path.exists(game_executable)
@@ -98,7 +112,7 @@ def update_reloaded_app_location(reloaded_path, danganronpa_path):
     with open(file_location, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)  
 
-def check_file_with_sha512(file_path):
+def check_file_with_sha512(file_path, language):
     block_size = 1048576
     hasher = hashlib.sha512()
     file_size = os.path.getsize(file_path)
@@ -109,58 +123,118 @@ def check_file_with_sha512(file_path):
             hasher.update(bloque)
             read += len(bloque)
             read_percentage = (read / file_size) * 100
-            send_message_about_game_integrity_check_status(file_path, read_percentage)
+            send_message_about_game_integrity_check_status(file_path, read_percentage, language)
     return hasher.hexdigest()
 
-def send_message_about_game_integrity_check_status(file_path, read_percentage):
+def send_message_about_game_integrity_check_status(file_path, read_percentage, language):
     file_name_with_extension = os.path.basename(file_path)
     text = f"Checking game's integrity {read_percentage:.2f}%"
+    if language == 'es':
+        text = f"Revisando la integridad del juego {read_percentage:.2f}%"
+    if language == 'fr':
+        text = f"Verification de l'integrité des fichiers du jeu {read_percentage:.2f}%"
     check_order = {
         "partition_data_win.cpk": f"{text} (1/3)",
-        "partition_data_win_us.cpk": f"{text} (2/3)",
-        "partition_resident_win.cpk": f"{text} (3/3)"
+        "partition_resident_win.cpk": f"{text} (2/3)",
+        "partition_data_win_us.cpk": f"{text} (3/3)",
+        "partition_data_win_fr.cpk": f"{text} (3/3)"
     }
     send_message_about_integrity_check_status(check_order[file_name_with_extension])
 
-def check_game_integrity(danganronpa_path):
+def check_game_integrity(danganronpa_path, language):
     show_started_checking_game_integrity()
     game_executable = os.path.join(program_files_x86_folder_path, "Steam", "steamapps", "common", "Danganronpa V3 Killing Harmony", "Dangan3Win.exe")
     if danganronpa_path != "STEAM_PATH": game_executable = danganronpa_path
     path_to_game_data = os.path.join(os.path.dirname(game_executable), "data", "win")
     if not os.path.exists(path_to_game_data): 
-        send_message_about_game_installation_modified()
+        send_message_about_game_installation_modified(language)
         return "MODIFIED"
-    files_to_check = {
-        "partition_data_win.cpk": "53ea22e09d98029f88a4565d230d842ce4f6097ad6138073e54aa0a8d6e6bc397bc2e8b33b19d6b4b0a9c727d6b0796147b46e0409c1fc17d64a09fb1536e2c2", 
-        "partition_data_win_us.cpk": "c0e03d82833c4d6e9c60e1517c1a2933a914bcd12383a1278d773b5e07d582901812e0331e9dc58b89a4462e2f2400238f9f40c7f3694d8c1ca8f4ef64ee442b", 
-        "partition_resident_win.cpk": "10ac990ea8fb9b2f7ee68b23aeb61b998fc21c4092bf8f6327aadd80c1227bd9e850e85e95f0bc8093de6d652fe7c43f56588ab24db471ef66e6bfc3208b489d"
+    
+    #Defining files to check for
+    required_files_missing = search_for_missing_files([
+        "partition_data_win.cpk",
+        "partition_resident_win.cpk"
+    ], path_to_game_data)
+
+    language_files_found = search_for_files([
+        "partition_data_win_us.cpk",
+        "partition_data_win_fr.cpk",
+    ], path_to_game_data)
+
+    #Checking if the files exist, integrity check will come after
+    #If language = 'en' or 'es' but partition_data_win_fr was found
+    if "partition_data_win_fr.cpk" in language_files_found:
+        if language == 'en':
+            send_message_about_cpk_missing("You've selected the English version but your game is configured for French. Please change it and try again")
+            return "MODIFIED"
+        if language == 'es':
+            send_message_about_cpk_missing("Has seleccionado la versión en español, pero tu juego debe estar configurado en inglés para usarla. Por favor, cámbialo e inténtalo de nuevo")
+            return "MODIFIED"
+
+    #If language = 'fr' but partition_data_win_us was found
+    if language == 'fr' and "partition_data_win_us.cpk" in language_files_found:
+        send_message_about_cpk_missing("Vous avez selectionné la version Francaise alors que la langue de votre jeu est en Anglais. Veuillez la changer et reessayer.")
+        return "MODIFIED"
+
+    #If neither partition_data_win_us or partition_data_win_fr is found, show generic error
+    if "partition_data_win_us.cpk" not in language_files_found and "partition_data_win_fr.cpk" not in language_files_found:
+        if language == 'en':
+            send_message_about_cpk_missing("Your game installation seems to be either corrupt or already modified by another mod. Please repair your DRV3 installation")
+        if language == 'es':
+            send_message_about_cpk_missing("La instalación de tu juego parece estar corrupta o ya ha sido modificado por otro mod. Por favor, repara tu instalación de DRV3")
+        if language == 'fr':
+            send_message_about_cpk_missing("L'installation de votre jeu semble être corrompues ou déjà modifiée par un autre mod. Veuillez réparer l'installation de DRV3")
+        return "MODIFIED"
+
+    #Time to handle the required files 
+    if len(required_files_missing) == 1: #If only one file is missing
+        MISSING_CPK = required_files_missing[0]
+        if language == 'en':
+            send_message_about_cpk_missing(f"{MISSING_CPK} CPK is missing. Please make sure it's in data/win. Otherwise, repair your install")
+        if language == 'es':
+            send_message_about_cpk_missing(f"El CPK {MISSING_CPK} no se ha encontrado. Por favor, asegurate de que esté en data/win. De lo contrario, repara tu instalación")
+        if language == 'fr':
+            send_message_about_cpk_missing(f"Le CPK {MISSING_CPK} n'a pas été trouvé. Assurez vous qu'il se trouve dans data/win. Autrement, réparez votre installation.")
+        return "MODIFIED"
+
+    if len(required_files_missing) >= 2: #If more than one is missing
+        MISSING_CPKS_SEPARATED_BY_COMMA = ', '.join(required_files_missing)
+        if language == 'en':
+            send_message_about_cpk_missing(f"{MISSING_CPKS_SEPARATED_BY_COMMA} CPKs are missing. Please make sure they are in data/win. Otherwise, repair your install")
+        if language == 'es':
+            send_message_about_cpk_missing(f"Los CPKs {MISSING_CPKS_SEPARATED_BY_COMMA} no se han encontrado. Por favor, asegurate de que estén en data/win. De lo contrario, repara tu instalación")
+        if language == 'fr':
+            send_message_about_cpk_missing(f"Les CPK {MISSING_CPKS_SEPARATED_BY_COMMA} n'ont pas été trouvés. Assurez vous qu'ils se trouvent dans data/win. Autrement, réparez votre installation.")
+        return "MODIFIED"
+
+    #Lastly, we check the integrity of the files, however, we gotta watch out to only check those that matter to us
+    files_to_check_integrity = {
+        "partition_data_win.cpk": "53ea22e09d98029f88a4565d230d842ce4f6097ad6138073e54aa0a8d6e6bc397bc2e8b33b19d6b4b0a9c727d6b0796147b46e0409c1fc17d64a09fb1536e2c2",  
+        "partition_resident_win.cpk": "10ac990ea8fb9b2f7ee68b23aeb61b998fc21c4092bf8f6327aadd80c1227bd9e850e85e95f0bc8093de6d652fe7c43f56588ab24db471ef66e6bfc3208b489d",
     }
-    missing_files = []
-    for file, hash in files_to_check.items():
-        path_to_file = os.path.abspath(os.path.join(path_to_game_data, file))
-        if not os.path.exists(path_to_file): missing_files.append(os.path.splitext(file)[0])
-    if len(missing_files) == 1 and missing_files[0] == "partition_data_win_us":
-        send_message_about_cpk_missing(f"{missing_files[0]} CPK is missing. Please make sure you're playing in English. Otherwise, repair your install.")
-        return "MODIFIED"
-    if len(missing_files) == 1:
-        send_message_about_cpk_missing(f"{missing_files[0]} CPK is missing. Please make sure it's in data/win. Otherwise, repair your install.")
-        return "MODIFIED"
-    if len(missing_files) >= 2:
-        send_message_about_cpk_missing(f"{', '.join(missing_files)} CPKs are missing. Please make sure they are in data/win. Otherwise, repair your install.")
-        return "MODIFIED"
-    for file, hash in files_to_check.items():
+    if language == 'en' or language == 'es':
+        files_to_check_integrity["partition_data_win_us.cpk"] = "c0e03d82833c4d6e9c60e1517c1a2933a914bcd12383a1278d773b5e07d582901812e0331e9dc58b89a4462e2f2400238f9f40c7f3694d8c1ca8f4ef64ee442b"
+    if language == 'fr':
+        files_to_check_integrity["partition_data_win_fr.cpk"] = "85392c0f10641861880c6e09af170ea06747d904001d9cbc671935dba52b8632c0e1285e2d63f89aca37f03fac72ae425265650e4c7014a3fb6ddcff10dde735"
+
+    for file, hash in files_to_check_integrity.items():
         if should_skip_game_integrity_check: return "SKIPPED"
         path_to_file = os.path.abspath(os.path.join(path_to_game_data, file))
-        hash_obtained = check_file_with_sha512(path_to_file)
+        hash_obtained = check_file_with_sha512(path_to_file, language)
         if should_skip_game_integrity_check: return "SKIPPED"
         if hash != hash_obtained: 
-            send_message_about_game_installation_modified()
+            send_message_about_game_installation_modified(language)
             return "MODIFIED"
     stop_showing_checking_game_integrity()
         
-def send_message_about_game_installation_modified():
+def send_message_about_game_installation_modified(language):
     stop_showing_checking_game_integrity()
-    send_message_about_installation_status("Your game installation seems to be either corrupt or already modified by another mod. Please repair your DRV3 installation.")
+    if language == 'en':
+        send_message_about_installation_status("Your game installation seems to be either corrupt or already modified by another mod. Please repair your DRV3 installation")
+    if language == 'es':
+        send_message_about_installation_status("La instalación de tu juego parece estar corrupta o ya ha sido modificado por otro mod. Por favor, repara tu instalación de DRV3")
+    if language == 'fr':
+        send_message_about_installation_status("L'installation de votre jeu semble être corrompues ou déjà modifiée par un autre mod. Veuillez réparer l'installation de DRV3")
     send_message_about_installation_status("INSTALL FINISHED")
 
 def send_message_about_cpk_missing(message):
@@ -180,3 +254,19 @@ def show_started_checking_game_integrity():
 
 def send_message_about_integrity_check_status(message):
     webview.windows[0].evaluate_js(f'showIntegrityCheckStatus("{message}")')
+
+def search_for_missing_files(files, path_to_game_data):
+    missing_files = []
+    for file in files:
+        path_to_file = os.path.abspath(os.path.join(path_to_game_data, file))
+        if not os.path.exists(path_to_file): 
+            missing_files.append(file)
+    return missing_files
+
+def search_for_files(files, path_to_game_data):
+    files_found = []
+    for file in files:
+        path_to_file = os.path.abspath(os.path.join(path_to_game_data, file))
+        if os.path.exists(path_to_file): 
+            files_found.append(file)
+    return files_found

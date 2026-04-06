@@ -1,0 +1,60 @@
+import { hideAlert, updateButtonsMappedText } from "./alert.ts"
+import { playHoverSoundEffect, playSelectSoundEffect } from "./audio.ts"
+import { getLanguage, type TranslatedText } from "./language.ts"
+
+
+export type Button = {
+    text: TranslatedText | string,
+    onClick: () => void,
+    isClickable?: boolean,
+}
+
+export type ButtonWrapper = {
+    setVisible: (isVisible: boolean) => void;
+    setText: (text: TranslatedText | string) => void;
+    onClick: (callback: () => void) => void;
+    setClickable: (clickable: boolean) => void;
+}
+
+export function button(element: HTMLElement){
+    let isClickable = true
+    handleMouseHover()
+    function handleMouseHover(){
+        element.addEventListener('mouseenter', () => {
+            if(!isClickable) return
+            playHoverSoundEffect()
+            element.classList.add('hovered')
+        })
+    
+        element.addEventListener('mouseleave', () => {
+            element.classList.remove('hovered')
+        })
+    }
+
+    return {
+        setVisible: (isVisible: boolean) => {
+            element.style.visibility = isVisible ? 'visible' : 'hidden'
+        },
+        setText: (text: TranslatedText | string) => {
+            const selectedLanguage = getLanguage()
+            const buttonText = typeof text === 'string' ? text : text[selectedLanguage]
+            updateButtonsMappedText(element.children[1].innerHTML, buttonText)
+            element.children[1].innerHTML = buttonText
+        },
+        onClick: (callback: () => void) => {
+            const newElement = element.cloneNode(true) as HTMLElement
+            element.replaceWith(newElement)
+            element = newElement
+            handleMouseHover()
+            element.addEventListener('click', () => {
+                if(!isClickable) return
+                hideAlert()
+                callback()
+                playSelectSoundEffect()
+            })
+        },
+        setClickable: (clickable: boolean) => {
+            isClickable = clickable
+        }
+    }
+}
